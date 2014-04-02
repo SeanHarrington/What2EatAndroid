@@ -13,19 +13,13 @@ import android.widget.Toast;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-
-public class MainActivity extends Activity implements OnClickListener{
+public class UserActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_user);
 
-		Button buttontest = (Button) findViewById(R.id.main_user_data);
-		buttontest.setOnClickListener(this);
-		Button buttontest1 = (Button) findViewById(R.id.main_report);
-		buttontest1.setOnClickListener(this);
-		
 		
 	}
 
@@ -33,7 +27,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.user, menu);
 		return true;
 	}
 
@@ -46,40 +40,14 @@ public class MainActivity extends Activity implements OnClickListener{
 		if (id == R.id.action_settings) {
 			Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
 			
-			Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
-			MainActivity.this.startActivity(myIntent);
-			
 			return true;
 		}
 		else if (id == R.id.upload) {
 			Toast.makeText(getApplicationContext(), "UPDATE is clicked", Toast.LENGTH_SHORT).show();
-			
 			return true;
 		}
 			
 		return super.onOptionsItemSelected(item);
 	}
-  
-	
-	
-	
-	@Override
-	public void onClick(View src) {
-		switch (src.getId()) {
-        	case R.id.main_user_data:
-        		Toast.makeText(getApplicationContext(), "USER DATA is clicked", Toast.LENGTH_SHORT).show();
-        		
-        		Intent myUserIntent = new Intent(MainActivity.this, UserActivity.class);
-    			MainActivity.this.startActivity(myUserIntent);
-    			
-        		break;
-        	case R.id.main_report:
-        		Toast.makeText(getApplicationContext(), 
-                "REPORT is clicked", Toast.LENGTH_SHORT).show();
-        		Intent myReportIntent = new Intent(MainActivity.this, ReportActivity.class);
-    			MainActivity.this.startActivity(myReportIntent);
-    			
-        		break;
-		}		
-	}
+
 }
