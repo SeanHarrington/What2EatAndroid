@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+
     <string name="app_name">What2Eat</string>
     <string name="upload">UPDATE</string>
     <string name="action_settings">About</string>
@@ -15,5 +26,13 @@
     <string name="user_title">What2Eat Users</string>
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_user">UserActivity</string>
-
+    <string name="home">Home</string>
+    <string name="description">Image</string>
+    
+    <string name="about_version">What2Eat 0.1&#169;</string>
+    <string name="about_description">"A simple tool to track eating habits"</string>
+    <string name="about_authors">"Sean Harrington\nJared Vibert\nSam Reinthaler"</string>
+    <string name="about_github">"https://github.com/SeanHarrington/What2EatAndroid"</string>
+    <string name="report_friends">Friends</string>
+    <string name="report_foods">Foods</string>
 </resources>

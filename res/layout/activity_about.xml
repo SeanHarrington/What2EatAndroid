@@ -11,6 +11,7 @@
     
     <ImageView
         android:id="@+id/imageView2"
+        android:contentDescription="@string/description"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
@@ -18,6 +19,44 @@
         android:layout_marginTop="38dp"
         android:src="@drawable/ic_launcher" />
 
-   
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/about_version"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/about_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/about_description"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/id_about_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/about_description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/about_authors"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/id_about_github"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_below="@+id/id_about_author"
+        android:layout_marginTop="20dp"
+        android:text="@string/about_github"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+ 
 </RelativeLayout>

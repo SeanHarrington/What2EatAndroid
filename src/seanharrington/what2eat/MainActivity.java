@@ -1,17 +1,13 @@
 package seanharrington.what2eat;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MenuItem; 
 import android.widget.Toast;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity implements OnClickListener{
@@ -46,14 +42,32 @@ public class MainActivity extends Activity implements OnClickListener{
 		if (id == R.id.action_settings) {
 			Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
 			
-			Intent myIntent = new Intent(MainActivity.this, AboutActivity.class);
-			MainActivity.this.startActivity(myIntent);
+			Intent myIntent = new Intent(this, AboutActivity.class);
+			this.startActivity(myIntent);
 			
 			return true;
 		}
 		else if (id == R.id.upload) {
 			Toast.makeText(getApplicationContext(), "UPDATE is clicked", Toast.LENGTH_SHORT).show();
 			
+			return true;
+		}
+		else if (id == R.id.menu_bar_user) {
+			Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
+			Intent myIntent = new Intent(this, UserActivity.class);
+			this.startActivity(myIntent);
+			return true;
+		}
+		else if (id == R.id.menu_bar_report) {
+			Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
+			Intent myIntent = new Intent(this, ReportActivity.class);
+			this.startActivity(myIntent);
+			return true;
+		}
+		else if (id == R.id.menu_bar_home) {
+			Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
+			Intent myIntent = new Intent(this, MainActivity.class);
+			this.startActivity(myIntent);
 			return true;
 		}
 			
