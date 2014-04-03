@@ -1,11 +1,15 @@
 package seanharrington.what2eat;
 
 import android.app.Activity;
+import android.widget.ArrayAdapter;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Spinner;
+
+
 public class UserActivity extends Activity {
 
 	@Override
@@ -13,9 +17,26 @@ public class UserActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user);
 
+		addItemsOnSpinnerFriends();
+		addItemsOnSpinnerFoods();
 		
 	}
 
+	
+	public void addItemsOnSpinnerFriends() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_name);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.name_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+	  }
+
+	public void addItemsOnSpinnerFoods() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_food);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.food_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+	  }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -43,23 +64,7 @@ public class UserActivity extends Activity {
 			
 			return true;
 		}
-		else if (id == R.id.menu_bar_user) {
-			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
-			
-			return true;
-		}
-		else if (id == R.id.menu_bar_report) {
-			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, ReportActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_home) {
-			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, MainActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
+		
 			
 		return super.onOptionsItemSelected(item);
 	}

@@ -2,7 +2,6 @@ package seanharrington.what2eat;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -41,24 +40,7 @@ public class AboutActivity extends Activity {
 			
 			return true;
 		}
-		else if (id == R.id.menu_bar_user) {
-			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, UserActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_report) {
-			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, ReportActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_home) {
-			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, MainActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
+		
 			
 		return super.onOptionsItemSelected(item);
 	}

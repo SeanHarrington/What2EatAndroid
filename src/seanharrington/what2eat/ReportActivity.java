@@ -1,8 +1,5 @@
 package seanharrington.what2eat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.os.Bundle;
@@ -15,7 +12,7 @@ import android.widget.Spinner;
 
 public class ReportActivity extends Activity {
 
-	
+	DBHelper dbh;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +27,14 @@ public class ReportActivity extends Activity {
 	}
 	public void addItemsOnSpinnerFriends() {
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_friends);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.name_array, android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.name_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 	  }
 
 	public void addItemsOnSpinnerFoods() {
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_foods);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.food_array, android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.food_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 	  }
@@ -71,23 +66,7 @@ public class ReportActivity extends Activity {
 			
 			return true;
 		}
-		else if (id == R.id.menu_bar_user) {
-			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, UserActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_report) {
-			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
-			
-			return true;
-		}
-		else if (id == R.id.menu_bar_home) {
-			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, MainActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
+		
 			
 		return super.onOptionsItemSelected(item);
 	}

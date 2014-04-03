@@ -28,14 +28,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
-        android:id="@+id/report_spinner_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
-        android:layout_alignLeft="@+id/report_spinner_foods"
-        android:layout_marginBottom="18dp" />
-
-    <Spinner
         android:id="@+id/report_spinner_foods"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,5 +43,13 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/description"
         android:src="@drawable/ic_launcher" />
+
+    <Spinner
+        android:id="@+id/report_spinner_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignLeft="@+id/report_spinner_foods"
+        android:layout_marginBottom="14dp" />
 
 </RelativeLayout>

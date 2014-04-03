@@ -52,24 +52,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			
 			return true;
 		}
-		else if (id == R.id.menu_bar_user) {
-			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, UserActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_report) {
-			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, ReportActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
-		else if (id == R.id.menu_bar_home) {
-			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
-			Intent myIntent = new Intent(this, MainActivity.class);
-			this.startActivity(myIntent);
-			return true;
-		}
+		
 			
 		return super.onOptionsItemSelected(item);
 	}
