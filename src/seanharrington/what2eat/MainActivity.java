@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
 			
 			Intent myIntent = new Intent(this, AboutActivity.class);
 			this.startActivity(myIntent);
@@ -53,19 +53,19 @@ public class MainActivity extends Activity implements OnClickListener{
 			return true;
 		}
 		else if (id == R.id.menu_bar_user) {
-			Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, UserActivity.class);
 			this.startActivity(myIntent);
 			return true;
 		}
 		else if (id == R.id.menu_bar_report) {
-			Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, ReportActivity.class);
 			this.startActivity(myIntent);
 			return true;
 		}
 		else if (id == R.id.menu_bar_home) {
-			Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, MainActivity.class);
 			this.startActivity(myIntent);
 			return true;
@@ -81,15 +81,14 @@ public class MainActivity extends Activity implements OnClickListener{
 	public void onClick(View src) {
 		switch (src.getId()) {
         	case R.id.main_user_data:
-        		Toast.makeText(getApplicationContext(), "USER DATA is clicked", Toast.LENGTH_SHORT).show();
+        		//Toast.makeText(getApplicationContext(), "USER DATA is clicked", Toast.LENGTH_SHORT).show();
         		
         		Intent myUserIntent = new Intent(MainActivity.this, UserActivity.class);
     			MainActivity.this.startActivity(myUserIntent);
     			
         		break;
         	case R.id.main_report:
-        		Toast.makeText(getApplicationContext(), 
-                "REPORT is clicked", Toast.LENGTH_SHORT).show();
+        		//Toast.makeText(getApplicationContext(), "REPORT is clicked", Toast.LENGTH_SHORT).show();
         		Intent myReportIntent = new Intent(MainActivity.this, ReportActivity.class);
     			MainActivity.this.startActivity(myReportIntent);
     			

@@ -9,7 +9,8 @@ package seanharrington.what2eat;
 
 public final class R {
     public static final class array {
-        public static final int planets_array=0x7f050000;
+        public static final int food_array=0x7f050000;
+        public static final int name_array=0x7f050001;
     }
     public static final class attr {
     }
@@ -46,10 +47,10 @@ public final class R {
         public static final int menu_bar_home=0x7f090013;
         public static final int menu_bar_report=0x7f090011;
         public static final int menu_bar_user=0x7f090012;
-        public static final int report_spinner_foods=0x7f09000a;
+        public static final int report_spinner_foods=0x7f09000b;
         public static final int report_spinner_friends=0x7f09000d;
         public static final int textView1=0x7f09000c;
-        public static final int textView2=0x7f09000b;
+        public static final int textView2=0x7f09000a;
         public static final int upload=0x7f090010;
     }
     public static final class layout {

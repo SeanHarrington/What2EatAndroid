@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+      <string-array name="food_array">
+        <item>Cheeseburger</item>
+        <item>Baked Chicken</item>
+        <item>Tacos</item>
+        <item>Celery</item>
+        <item>Mountain Dew</item>
+        <item>Kool-Aid</item>
+        <item>Hot Dogs</item>
+        <item>Popeye\'s Chicken</item>
+    </string-array>
+    
+    <string-array name="name_array">
+        <item>John</item>
+        <item>Mary</item>
+        <item>Joe</item>
+        <item>Mark</item>
+        <item>Susan</item>
+        <item>Ryan</item>
+        <item>Tori</item>
+        <item>Matthew</item>
     </string-array>
 
     <string name="app_name">What2Eat</string>

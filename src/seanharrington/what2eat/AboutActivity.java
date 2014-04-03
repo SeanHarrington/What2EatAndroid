@@ -31,7 +31,7 @@ public class AboutActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "HELP is clicked", Toast.LENGTH_SHORT).show();
 			
 			
 			return true;
@@ -42,19 +42,19 @@ public class AboutActivity extends Activity {
 			return true;
 		}
 		else if (id == R.id.menu_bar_user) {
-			Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "User is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, UserActivity.class);
 			this.startActivity(myIntent);
 			return true;
 		}
 		else if (id == R.id.menu_bar_report) {
-			Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Report is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, ReportActivity.class);
 			this.startActivity(myIntent);
 			return true;
 		}
 		else if (id == R.id.menu_bar_home) {
-			Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Home is clicked", Toast.LENGTH_SHORT).show();
 			Intent myIntent = new Intent(this, MainActivity.class);
 			this.startActivity(myIntent);
 			return true;
