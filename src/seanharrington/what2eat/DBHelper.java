@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper{
-	final static String DB_NAME = "example.db";
+	final static String DB_NAME = "what2eat.db";
 	final static int DB_VERSION = 1;
 	private final String EXAMPLE_TABLE = "configTable";
+	private final String USERS = "USERS";
+	private final String USERS_FOODS = "USERS_FOODS";
+	private final String FOODS = "FOODS";
 	Context context;
 
 	public DBHelper(Context context){		
@@ -20,7 +23,9 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE IF NOT EXISTS " + EXAMPLE_TABLE + " (text VARCHAR);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
 	}
 
 	@Override
@@ -29,14 +34,12 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 
-	public boolean insertText(String text){
+	public boolean insertText(){
 		try{
 			//DBHelper appDB = new DBHelper(context);
 			SQLiteDatabase qdb = this.getWritableDatabase();
-			Log.d("DB Insert: ", "INSERT OR REPLACE INTO " +
-	    			EXAMPLE_TABLE + " (text) Values ("+ text + ");");
-			qdb.execSQL("INSERT OR REPLACE INTO " +
-	    			EXAMPLE_TABLE + " (text) Values (\""+ text + "\");");
+			//Log.d("DB Insert: ", "INSERT OR REPLACE INTO " + USERS + " (text) Values ("+ text + ");");
+			qdb.execSQL("INSERT INTO USERS(name,email) VALUES ('Sean','sean@you.com');");
 			qdb.close();
 		}
 		catch(SQLiteException se){
@@ -45,19 +48,20 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		return true;
 	}
-	public String getText(){
+	public String getCount(){
 		String toReturn = "";
 		try{
 			//DBHelper appDB = new DBHelper(context);
 			SQLiteDatabase qdb = this.getReadableDatabase();
-			qdb.execSQL("CREATE TABLE IF NOT EXISTS " + EXAMPLE_TABLE + " (text VARCHAR);");
+			//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + EXAMPLE_TABLE + " (text VARCHAR);");
 			Cursor c = qdb.rawQuery("SELECT * FROM " +
-	    			EXAMPLE_TABLE, null);
+	    			USERS, null);
 			if (c != null ) {
 	    		if  (c.moveToFirst()) {
 	    			do {
-	    				String text = c.getString(c.getColumnIndex("text"));
+	    				String text = c.getString(c.getColumnIndex("name"));
 	    				toReturn += text + "\n";
+	    				
 	    			}
 	    			while (c.moveToNext());
 	    		}
@@ -66,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		catch(SQLiteException se){
 			Log.d("DB Select Error: ",se.toString());
-			return "";
+			return "Errord Out";
 		}
 		return toReturn;
 	}
