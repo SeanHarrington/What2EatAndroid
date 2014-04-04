@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 
 
 public class UserActivity extends Activity {
-
+	Boolean initialDisplay = true;
+	Boolean initialDisplayFood = true;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,6 +25,45 @@ public class UserActivity extends Activity {
 
 		addItemsOnSpinnerFriends();
 		addItemsOnSpinnerFoods();
+		
+		Spinner spnLocale;
+		spnLocale = (Spinner)findViewById(R.id.spinner_user_name);
+		spnLocale.setOnItemSelectedListener(new OnItemSelectedListener() {
+			 @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			        if (initialDisplay == true){
+			        	initialDisplay = false;
+			        } else {
+			        	EditText txt = (EditText) findViewById(R.id.editText1); 
+			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_name);
+			        	String Text = spn1.getSelectedItem().toString();
+			        	txt.setText(Text);
+			        }
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+		});
+		
+		Spinner spnLocale2;
+		spnLocale2 = (Spinner)findViewById(R.id.spinner_user_food);
+		spnLocale2.setOnItemSelectedListener(new OnItemSelectedListener() {
+			 @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			        if (initialDisplayFood == true){
+			        	initialDisplayFood = false;
+			        } else {
+			        	EditText txt = (EditText) findViewById(R.id.editText3); 
+			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_food);
+			        	String Text = spn1.getSelectedItem().toString();
+			        	txt.setText(Text);
+			        }
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+		});
+		
 		
 	}
 

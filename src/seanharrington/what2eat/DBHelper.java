@@ -10,9 +10,8 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper{
 	final static String DB_NAME = "what2eat.db";
 	final static int DB_VERSION = 1;
-	private final String EXAMPLE_TABLE = "configTable";
 	private final String USERS = "USERS";
-	private final String USERS_FOODS = "USERS_FOODS";
+	//private final String USERS_FOODS = "USERS_FOODS";
 	private final String FOODS = "FOODS";
 	Context context;
 
