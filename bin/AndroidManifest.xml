@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="seanharrington.what2eat.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
         <activity
             android:name="seanharrington.what2eat.AboutActivity"
             android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"
             android:parentActivityName="seanharrington.what2eat.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,6 +36,7 @@
         <activity
             android:name="seanharrington.what2eat.ReportActivity"
             android:label="@string/title_activity_report"
+            android:screenOrientation="portrait"
             android:parentActivityName="seanharrington.what2eat.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,6 +45,7 @@
         <activity
             android:name="seanharrington.what2eat.UserActivity"
             android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
             android:parentActivityName="seanharrington.what2eat.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

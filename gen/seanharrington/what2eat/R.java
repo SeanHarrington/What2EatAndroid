@@ -74,28 +74,35 @@ public final class R {
         public static final int user=0x7f080003;
     }
     public static final class string {
-        public static final int about=0x7f060003;
-        public static final int about_authors=0x7f060012;
-        public static final int about_description=0x7f060011;
-        public static final int about_github=0x7f060013;
-        public static final int about_title=0x7f060009;
-        public static final int about_version=0x7f060010;
-        public static final int action_settings=0x7f060002;
-        public static final int app_name=0x7f060000;
-        public static final int description=0x7f06000f;
-        public static final int hello_world=0x7f060007;
-        public static final int home=0x7f06000e;
-        public static final int main_title=0x7f060008;
-        public static final int report=0x7f060005;
-        public static final int report_foods=0x7f060015;
-        public static final int report_friends=0x7f060014;
-        public static final int report_title=0x7f06000a;
-        public static final int title_activity_about=0x7f060006;
-        public static final int title_activity_report=0x7f06000c;
-        public static final int title_activity_user=0x7f06000d;
-        public static final int upload=0x7f060001;
-        public static final int user_data=0x7f060004;
-        public static final int user_title=0x7f06000b;
+        public static final int about=0x7f06000a;
+        public static final int about_authors=0x7f060019;
+        public static final int about_description=0x7f060018;
+        public static final int about_github=0x7f06001a;
+        public static final int about_title=0x7f060010;
+        public static final int about_version=0x7f060017;
+        public static final int action_settings=0x7f060009;
+        public static final int activity_user_create_update=0x7f060003;
+        public static final int activity_user_email=0x7f060001;
+        public static final int activity_user_food=0x7f060000;
+        public static final int activity_user_hate_it=0x7f060006;
+        public static final int activity_user_its_ok=0x7f060004;
+        public static final int activity_user_love_it=0x7f060005;
+        public static final int activity_user_name=0x7f060002;
+        public static final int app_name=0x7f060007;
+        public static final int description=0x7f060016;
+        public static final int hello_world=0x7f06000e;
+        public static final int home=0x7f060015;
+        public static final int main_title=0x7f06000f;
+        public static final int report=0x7f06000c;
+        public static final int report_foods=0x7f06001c;
+        public static final int report_friends=0x7f06001b;
+        public static final int report_title=0x7f060011;
+        public static final int title_activity_about=0x7f06000d;
+        public static final int title_activity_report=0x7f060013;
+        public static final int title_activity_user=0x7f060014;
+        public static final int upload=0x7f060008;
+        public static final int user_data=0x7f06000b;
+        public static final int user_title=0x7f060012;
     }
     public static final class style {
         /** 

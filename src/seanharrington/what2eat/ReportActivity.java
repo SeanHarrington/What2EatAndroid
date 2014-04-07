@@ -22,7 +22,7 @@ public class ReportActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report);
-		dbh = new DBHelper(this);
+		dbh = new DBHelper(this); 
 		
 		addItemsOnSpinnerFriends();
 		addItemsOnSpinnerFoods();

@@ -23,20 +23,31 @@
         <item>Matthew</item>
     </string-array>
 
+    
+    <string name="activity_user_food">Food</string>
+    <string name="activity_user_email">Friend\'s Email</string>
+    <string name="activity_user_name">Friend\'s Name</string>
+    <string name="activity_user_create_update">Create/Update</string>
+    
+    <string name="activity_user_its_ok">It\'s OK</string>
+    <string name="activity_user_love_it">Love It!</string>
+    <string name="activity_user_hate_it">Hate It!</string>
+    
+    
     <string name="app_name">What2Eat</string>
     <string name="upload">UPDATE</string>
     <string name="action_settings">About</string>
     <string name="about">About</string>
-    <string name="user_data">User Data</string>
-    <string name="report">Reports</string>
-    <string name="title_activity_about">AboutActivity</string>
+    <string name="user_data">Add A Friend/Food</string>
+    <string name="report">Friends/Foods Report</string>
+    <string name="title_activity_about">About</string>
     <string name="hello_world">Hello world!</string>
     <string name="main_title">What2Eat</string>
     <string name="about_title">About What2Eat</string>
     <string name="report_title">What2Eat Reports</string>
     <string name="user_title">What2Eat Users</string>
-    <string name="title_activity_report">ReportActivity</string>
-    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_report">Reports</string>
+    <string name="title_activity_user">Friends/Foods</string>
     <string name="home">Home</string>
     <string name="description">Image</string>
     
