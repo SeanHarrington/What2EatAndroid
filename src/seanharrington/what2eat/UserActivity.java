@@ -8,21 +8,43 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
+import android.view.View.OnClickListener;
 
 
-public class UserActivity extends Activity {
+public class UserActivity extends Activity implements OnClickListener {
 	Boolean initialDisplay = true;
 	Boolean initialDisplayFood = true;
+	DBHelper dbh;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user);
-
+		dbh = new DBHelper(this); 
+		
+		//create update user button
+		Button buttontest = (Button) findViewById(R.id.button1);
+		buttontest.setOnClickListener(this);
+		
+		//love it
+		Button buttontest2 = (Button) findViewById(R.id.button2);
+		buttontest2.setOnClickListener(this);
+		
+		//its ok
+		Button buttontest3 = (Button) findViewById(R.id.button3);
+		buttontest3.setOnClickListener(this);
+		
+		//hate it
+		Button buttontest4 = (Button) findViewById(R.id.button4);
+		buttontest4.setOnClickListener(this);
+		
+		
+		
 		addItemsOnSpinnerFriends();
 		addItemsOnSpinnerFoods();
 		
@@ -112,6 +134,38 @@ public class UserActivity extends Activity {
 		
 			
 		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	public void onClick(View src) {
+		switch (src.getId()) {
+        	case R.id.button1:
+        		EditText txt = (EditText) findViewById(R.id.editText1); 
+	        	String userName;
+        		userName = txt.getText().toString();
+        		
+        		EditText txt1 = (EditText) findViewById(R.id.editText2); 
+	        	String email;
+        		email = txt1.getText().toString();
+        		
+        		dbh.addUser(userName, email);
+     /*
+        		String teststring = dbh.getCount().toString();
+        		EditText txta = (EditText) findViewById(R.id.editText3); 
+	        	
+	        	txta.setText(teststring);
+       */ 		
+        		break;
+        	case R.id.button2:
+    			
+        		break;
+        	case R.id.button3:
+    			
+        		break;
+        	case R.id.button4:
+    			
+        		break;
+		}		
 	}
 
 }

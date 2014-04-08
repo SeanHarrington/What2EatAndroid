@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 public class DBHelper extends SQLiteOpenHelper{
 	final static String DB_NAME = "what2eat.db";
 	final static int DB_VERSION = 1;
@@ -32,7 +33,41 @@ public class DBHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 
 	}
+	public Integer GetUserId(String name) {
+		return 0;
+	}
+	
+	public Integer GetFoodId(String name) {
+		return 0;
+	}
+	
+	public String GetUserEmail(Integer userId) {
+		return "email";
+	}
 
+	
+	public void addUser(String userName, String email) {
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		//leave these 2 here for wiping the table
+		//qdb.execSQL("DROP TABLE USERS;");
+		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
+		if (c != null ) {
+				if  (c.moveToFirst()) {
+						qdb.execSQL("UPDATE USERS SET email = \""+ email + "\" WHERE name = \""+ userName + "\";");
+				}
+				else{
+					qdb.execSQL("INSERT INTO USERS(name,email) VALUES (\""+ userName + "\",\""+ email + "\");");
+				}
+		}
+		qdb.close();
+	}
+	public void addFood(String userName, String foodName, Integer rating) {
+		
+		
+	}
+	
+	
 	public boolean insertText(){
 		try{
 			//DBHelper appDB = new DBHelper(context);
@@ -58,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper{
 			if (c != null ) {
 	    		if  (c.moveToFirst()) {
 	    			do {
-	    				String text = c.getString(c.getColumnIndex("name"));
+	    				String text = c.getString(c.getColumnIndex("email"));
 	    				toReturn += text + "\n";
 	    				
 	    			}
