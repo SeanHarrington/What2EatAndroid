@@ -10,15 +10,6 @@
     tools:context=".ReportActivity" >
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/report_spinner_foods"
-        android:layout_alignRight="@+id/textView1"
-        android:text="@string/report_foods"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,5 +42,14 @@
         android:layout_above="@+id/textView2"
         android:layout_alignLeft="@+id/report_spinner_foods"
         android:layout_marginBottom="14dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/report_spinner_foods"
+        android:layout_centerHorizontal="true"
+        android:text="@string/report_foods"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
