@@ -51,12 +51,12 @@ public final class R {
         public static final int main_report=0x7f090008;
         public static final int main_user_data=0x7f090007;
         public static final int maintitle=0x7f090009;
-        public static final int report_spinner_foods=0x7f09000b;
-        public static final int report_spinner_friends=0x7f09000d;
+        public static final int report_spinner_foods=0x7f09000c;
+        public static final int report_spinner_friends=0x7f09000b;
         public static final int spinner_user_food=0x7f090013;
         public static final int spinner_user_name=0x7f090011;
-        public static final int textView1=0x7f09000c;
-        public static final int textView2=0x7f09000a;
+        public static final int textView1=0x7f09000a;
+        public static final int textView2=0x7f09000d;
         public static final int upload=0x7f090018;
     }
     public static final class layout {
