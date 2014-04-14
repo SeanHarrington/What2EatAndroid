@@ -60,6 +60,10 @@ public class UserActivity extends Activity implements OnClickListener {
 			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_name);
 			        	String Text = spn1.getSelectedItem().toString();
 			        	txt.setText(Text);
+			        	
+			        	EditText txt2 = (EditText) findViewById(R.id.editText2); 
+			        	String Text2 = dbh.GetUserEmail(dbh.GetUserId(Text));
+			        	txt2.setText(Text2);
 			        }
 			    }
 			    @Override
@@ -90,18 +94,34 @@ public class UserActivity extends Activity implements OnClickListener {
 	}
 
 	
+	
 	public void addItemsOnSpinnerFriends() {
+		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_name);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.name_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-	  }
+		String[] nArray;
+		nArray = new String[dbh.GetDBRecordCount("USERS")];
+		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("USERS"), Toast.LENGTH_SHORT).show();
+		nArray = dbh.populateUserArray(nArray);
+		
+		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
+		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adp2);
+		
+	 }
 
 	public void addItemsOnSpinnerFoods() {
+		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_food);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.food_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
+		String[] nArray;
+		nArray = new String[dbh.GetDBRecordCount("FOODS")];
+		Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
+		nArray = dbh.populateFoodArray(nArray);
+		
+		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
+		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adp2);
+		
+		
 	  }
 	
 	@Override

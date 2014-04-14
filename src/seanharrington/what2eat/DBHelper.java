@@ -34,7 +34,13 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 	public Integer GetUserId(String name) {
-		return 0;
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + name + "'", null);
+		c.moveToFirst();
+		int user_id= c.getInt(0);
+		c.close();
+		qdb.close(); 
+		return user_id;
 	}
 	
 	public Integer GetFoodId(String name) {
@@ -42,8 +48,65 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	
 	public String GetUserEmail(Integer userId) {
-		return "email";
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT email FROM USERS WHERE id = "+userId, null);
+		c.moveToFirst();
+		String user_email= c.getString(0);
+		c.close();
+		qdb.close(); 
+		return user_email;
+	
 	}
+	
+	public Integer GetDBRecordCount(String tableName){
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT count(*) FROM " + tableName, null);
+		c.moveToFirst();
+		int count= c.getInt(0);
+		c.close();
+		qdb.close(); 
+		
+		return count;
+	}
+	
+	public String[] populateUserArray(String[] nArray){
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		int iCount = 0;
+		Cursor c = qdb.rawQuery("SELECT name FROM " +
+    			USERS, null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				String text = c.getString(0);
+    				nArray[iCount] = text;
+    				iCount = iCount + 1;
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+		qdb.close(); 
+	return nArray;
+	}
+	
+	public String[] populateFoodArray(String[] nArray){
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		int iCount = 0;
+		Cursor c = qdb.rawQuery("SELECT food_name FROM " +
+    			FOODS, null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				String text = c.getString(0);
+    				nArray[iCount] = text;
+    				iCount = iCount + 1;
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+		qdb.close(); 
+	return nArray;
+	}
+	
 
 	
 	public void addUser(String userName, String email) {
