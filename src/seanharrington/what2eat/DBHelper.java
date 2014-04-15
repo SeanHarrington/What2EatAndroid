@@ -33,10 +33,10 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 
-	public Integer GetUserId(String name) {
+	public Integer getUserId(String sname) {
 		int user_id = -1;
 		SQLiteDatabase qdb = this.getWritableDatabase();
-		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + name + "'", null);
+		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + sname + "'", null);
 		if (c != null ) {
 			if (c.moveToFirst()) {
 				user_id= c.getInt(0);
@@ -61,6 +61,37 @@ public class DBHelper extends SQLiteOpenHelper{
 		return food_id;
 	}
 	
+	public String GetFoodName(int food_id){
+		String food_name = "";
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT food_name FROM FOODS WHERE food_id = " + food_id , null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				food_name = c.getString(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		
+		return food_name;
+	}
+	
+	public String GetUserName(int user_id){
+		String user_name = "";
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT name FROM USERS WHERE id = " + user_id , null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				user_name = c.getString(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		
+		return user_name;
+	}
+	
+	
 	public Integer GetUsersFoodsId(Integer user_id, Integer food_id) {
 		int uf_id = -1;
 		SQLiteDatabase qdb = this.getWritableDatabase();
@@ -75,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return uf_id;
 	}
 	
-	public String GetUserEmail(Integer userId) {
+	public String GetUserEmail(int userId) {
 		String user_email = "";
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT email FROM USERS WHERE id = "+userId, null);
@@ -103,11 +134,101 @@ public class DBHelper extends SQLiteOpenHelper{
 		return count;
 	}
 	
+	public Integer getReport_userCount(int food_id){
+		int count = 0;
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT count(*) FROM USERS_FOODS WHERE food_id = " + food_id, null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+					count= c.getInt(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		return count;
+	}
+		
+	public Integer getReport_foodCount(int user_id){
+		int count = 0;
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT count(*) FROM USERS_FOODS WHERE user_id = " + user_id, null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+		count= c.getInt(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		
+		
+		return count;
+	}
+	
+	public Integer[] populateUserReport(Integer[] nArray, int userId){
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		int iCount = 0;
+		Cursor c = qdb.rawQuery("SELECT food_id, rating, avg_rating FROM USERS_FOODS WHERE user_id = " + userId, null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				Integer food_id = c.getInt(c.getColumnIndex("food_id"));
+    				Integer rating = c.getInt(c.getColumnIndex("rating"));
+    				Integer avg_rating = c.getInt(c.getColumnIndex("avg_rating"));
+    				nArray[iCount] = food_id;
+    				iCount = iCount + 1;
+    				if (avg_rating > 0){
+    					nArray[iCount] = avg_rating;
+    				}
+    				else{
+    					nArray[iCount] = rating;    					
+    				}
+    				iCount = iCount + 1;
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+				
+		c.close();
+		qdb.close();
+		
+		return nArray;	
+	}
+	
+	public Integer[] populateFoodReport(Integer[] nArray, int foodId){
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		int iCount = 0;
+		Cursor c = qdb.rawQuery("SELECT user_id, rating, avg_rating FROM USERS_FOODS WHERE food_id = " + foodId, null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				int user_id = c.getInt(c.getColumnIndex("user_id"));
+    				int rating = c.getInt(c.getColumnIndex("rating"));
+    				int avg_rating = c.getInt(c.getColumnIndex("avg_rating"));
+    				nArray[iCount] = user_id;
+    				iCount = iCount + 1;
+    				if (avg_rating > 0){
+    					nArray[iCount] = avg_rating;
+    				}
+    				else{
+    					nArray[iCount] = rating;    					
+    				}
+    				iCount = iCount + 1;
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+				
+		c.close();
+		qdb.close();
+		
+		return nArray;	
+	}
+	
+	
 	public String[] populateUserArray(String[] nArray){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT name FROM " +
-    			USERS, null);
+		Cursor c = qdb.rawQuery("SELECT name FROM " + USERS, null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -125,8 +246,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public String[] populateFoodArray(String[] nArray){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT food_name FROM " +
-    			FOODS, null);
+		Cursor c = qdb.rawQuery("SELECT food_name FROM " + FOODS, null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -161,7 +281,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public void addFood(String userName, String foodName, Integer rating) {
 		
 		int food_id = GetFoodId(foodName);
-		int user_id = GetUserId(userName);
+		int user_id = getUserId(userName);
 		int users_foods_id = GetUsersFoodsId(user_id,food_id);
 		if (user_id < 0){
 			

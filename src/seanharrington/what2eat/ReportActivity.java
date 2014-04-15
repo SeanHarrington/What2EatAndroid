@@ -38,8 +38,14 @@ public class ReportActivity extends Activity{
 			        if (initialDisplay == true){
 			        	initialDisplay = false;
 			        } else {
+			        
+			        	Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_friends);
+			        	String Text = spn1.getSelectedItem().toString();
+			        	
 			        	Intent myUserIntent = new Intent(ReportActivity.this, OutputActivity.class);
-		    			ReportActivity.this.startActivity(myUserIntent);
+			        	myUserIntent.putExtra("output_type","user");
+			        	myUserIntent.putExtra("output_value",Text);
+			        	ReportActivity.this.startActivity(myUserIntent);
 			        }
 			    }
 			    @Override
@@ -55,8 +61,13 @@ public class ReportActivity extends Activity{
 			        if (initialDisplayFood == true){
 			        	initialDisplayFood = false;
 			        } else {
+			        	Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_foods);
+			        	String Text = spn1.getSelectedItem().toString();
+			        	
 			        	Intent myReportIntent = new Intent(ReportActivity.this, OutputActivity.class);
-		        		ReportActivity.this.startActivity(myReportIntent);
+			        	myReportIntent.putExtra("output_type","food");
+			        	myReportIntent.putExtra("output_value",Text);
+			        	ReportActivity.this.startActivity(myReportIntent);
 			        }
 			    }
 			    @Override

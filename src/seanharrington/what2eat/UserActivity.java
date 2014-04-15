@@ -61,7 +61,7 @@ public class UserActivity extends Activity implements OnClickListener {
 			        	txt.setText(Text);
 			        	
 			        	EditText txt2 = (EditText) findViewById(R.id.editText2); 
-			        	String Text2 = dbh.GetUserEmail(dbh.GetUserId(Text));
+			        	String Text2 = dbh.GetUserEmail(dbh.getUserId(Text));
 			        	txt2.setText(Text2);
 			        }
 			    }
