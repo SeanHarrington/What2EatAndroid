@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
 
-
 public class UserActivity extends Activity implements OnClickListener {
 	Boolean initialDisplay = true;
 	Boolean initialDisplayFood = true;
@@ -87,22 +86,19 @@ public class UserActivity extends Activity implements OnClickListener {
 			    }
 			    @Override
 			    public void onNothingSelected(AdapterView<?> parentView) {
+			    	Toast.makeText(getApplicationContext(), "I'm not selecting", Toast.LENGTH_SHORT).show();
 			    }
 		});
 		
 		
 	}
-
-	
 	
 	public void addItemsOnSpinnerFriends() {
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_name);
 		String[] nArray;
 		nArray = new String[dbh.GetDBRecordCount("USERS")];
-		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("USERS"), Toast.LENGTH_SHORT).show();
 		nArray = dbh.populateUserArray(nArray);
-		
 		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
 		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adp2);
@@ -114,7 +110,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_food);
 		String[] nArray;
 		nArray = new String[dbh.GetDBRecordCount("FOODS")];
-		Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
 		nArray = dbh.populateFoodArray(nArray);
 		
 		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
@@ -156,36 +152,40 @@ public class UserActivity extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
 	public void onClick(View src) {
+		String userName = "";
+		String email = "";
+		String foodName = "";
+		
+		EditText txt = (EditText) findViewById(R.id.editText1); 
+    	userName = txt.getText().toString();
+		EditText txt1 = (EditText) findViewById(R.id.editText2); 
+    	email = txt1.getText().toString();
+		EditText txt2 = (EditText) findViewById(R.id.editText3); 
+    	foodName = txt2.getText().toString();
+    	
 		switch (src.getId()) {
         	case R.id.button1:
-        		EditText txt = (EditText) findViewById(R.id.editText1); 
-	        	String userName;
-        		userName = txt.getText().toString();
-        		
-        		EditText txt1 = (EditText) findViewById(R.id.editText2); 
-	        	String email;
-        		email = txt1.getText().toString();
-        		
         		dbh.addUser(userName, email);
-     /*
-        		String teststring = dbh.getCount().toString();
-        		EditText txta = (EditText) findViewById(R.id.editText3); 
-	        	
-	        	txta.setText(teststring);
-       */ 		
         		break;
         	case R.id.button2:
-    			
+        		dbh.addFood(userName, foodName, 3);
+        		Toast.makeText(getApplicationContext(), userName + " Loves " + foodName, Toast.LENGTH_SHORT).show();
         		break;
         	case R.id.button3:
-    			
+        		dbh.addFood(userName, foodName, 2);
+        		Toast.makeText(getApplicationContext(), userName + " is ok with " + foodName, Toast.LENGTH_SHORT).show();
         		break;
         	case R.id.button4:
-    			
+        		dbh.addFood(userName, foodName, 1);
+        		Toast.makeText(getApplicationContext(), userName + " Hates " + foodName, Toast.LENGTH_SHORT).show();
         		break;
-		}		
+		}
+		initialDisplay = true;
+		initialDisplayFood = true;
+		addItemsOnSpinnerFriends();
+		addItemsOnSpinnerFoods();
+		
 	}
 
 }

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
 public class DBHelper extends SQLiteOpenHelper{
 	final static String DB_NAME = "what2eat.db";
 	final static int DB_VERSION = 1;
@@ -33,39 +32,74 @@ public class DBHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 
 	}
+
 	public Integer GetUserId(String name) {
+		int user_id = -1;
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + name + "'", null);
-		c.moveToFirst();
-		int user_id= c.getInt(0);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				user_id= c.getInt(0);
+			}
+		}
 		c.close();
 		qdb.close(); 
 		return user_id;
 	}
 	
 	public Integer GetFoodId(String name) {
-		return 0;
+		int food_id = -1;
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT food_id FROM FOODS WHERE food_name = '" + name + "'", null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				food_id = c.getInt(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		return food_id;
+	}
+	
+	public Integer GetUsersFoodsId(Integer user_id, Integer food_id) {
+		int uf_id = -1;
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT user_food_id FROM USERS_FOODS WHERE user_id = " + user_id + " and food_id = " + food_id, null);
+		if (c != null ) {
+		if (c.moveToFirst()) {
+		uf_id= c.getInt(0);
+		}
+		}
+		c.close();
+		qdb.close(); 
+		return uf_id;
 	}
 	
 	public String GetUserEmail(Integer userId) {
+		String user_email = "";
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT email FROM USERS WHERE id = "+userId, null);
-		c.moveToFirst();
-		String user_email= c.getString(0);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				user_email= c.getString(0);
+			}
+		}
 		c.close();
 		qdb.close(); 
-		return user_email;
-	
+		return user_email;	
 	}
 	
 	public Integer GetDBRecordCount(String tableName){
+		int count = 0;
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT count(*) FROM " + tableName, null);
-		c.moveToFirst();
-		int count= c.getInt(0);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+		count= c.getInt(0);
+			}
+		}
 		c.close();
 		qdb.close(); 
-		
 		return count;
 	}
 	
@@ -107,8 +141,6 @@ public class DBHelper extends SQLiteOpenHelper{
 	return nArray;
 	}
 	
-
-	
 	public void addUser(String userName, String email) {
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		//leave these 2 here for wiping the table
@@ -117,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
 		if (c != null ) {
 				if  (c.moveToFirst()) {
-						qdb.execSQL("UPDATE USERS SET email = \""+ email + "\" WHERE name = \""+ userName + "\";");
+						qdb.execSQL("UPDATE USERS SET USERSemail = \""+ email + "\" WHERE name = \""+ userName + "\";");
 				}
 				else{
 					qdb.execSQL("INSERT INTO USERS(name,email) VALUES (\""+ userName + "\",\""+ email + "\");");
@@ -125,11 +157,53 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		qdb.close();
 	}
+	
 	public void addFood(String userName, String foodName, Integer rating) {
 		
+		int food_id = GetFoodId(foodName);
+		int user_id = GetUserId(userName);
+		int users_foods_id = GetUsersFoodsId(user_id,food_id);
+		if (user_id < 0){
+			
+		}
+		//is it a new food?
+		else if (food_id < 0){
+			//yes, then double insert			
+			SQLiteDatabase qdb = this.getWritableDatabase();
+			qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodName +"');");
+			qdb.close();
+			food_id = GetFoodId(foodName);
+			qdb = this.getWritableDatabase();
+			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, rating, old_rating, updated, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ rating +",0,1," + rating +");");
+			qdb.close();
+		}
+		else if(users_foods_id < 0){
+			//is it a new users_foods entry?
+			//yes then insert
+			SQLiteDatabase qdb = this.getWritableDatabase();
+			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, rating, old_rating, updated, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ rating +",0,1," + rating +");");
+			qdb.close();
+		}
+		else {
+			//no then update
+			SQLiteDatabase qdb = this.getWritableDatabase();
+			int old_rating = 0;
+			//SELECT rating from USERS_FOODS where food_id = #{food_id} AND user_id = #{user_id}"
+			Cursor c = qdb.rawQuery("SELECT rating from USERS_FOODS where food_id = " + food_id + " and user_id = "+ user_id, null);
+			if (c != null ) {
+				if (c.moveToFirst()) {
+					old_rating= c.getInt(0);
+				}
+			}
+			c.close();
+			qdb.execSQL("UPDATE USERS_FOODS SET rating = " + rating + ",old_rating = "+ old_rating + ",updated = 1 WHERE user_id = " + user_id + " and food_id = " + food_id +";");			
+			qdb.close();
+		}
+		
+		
+			
 		
 	}
-	
 	
 	public boolean insertText(){
 		try{
@@ -145,6 +219,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		}
 		return true;
 	}
+
 	public String getCount(){
 		String toReturn = "";
 		try{
