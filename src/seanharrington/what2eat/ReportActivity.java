@@ -13,9 +13,11 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.view.View;
 
 
-public class ReportActivity extends Activity {
+
+public class ReportActivity extends Activity{
 
 	Boolean initialDisplay = true;
+	Boolean initialDisplayFood = true;
 	DBHelper dbh;
 	
 	@Override
@@ -29,51 +31,71 @@ public class ReportActivity extends Activity {
 		
 		
 		Spinner spnLocale;
-
 		spnLocale = (Spinner)findViewById(R.id.report_spinner_friends);
-
 		spnLocale.setOnItemSelectedListener(new OnItemSelectedListener() {
-		    
-			
 			 @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 			        if (initialDisplay == true){
-			        	//TextView txt2 = (TextView) findViewById(R.id.textView1);
-			        	//txt2.setText(initialDisplay + "");
 			        	initialDisplay = false;
-			        	//do nothing	
 			        } else {
-			        	//TextView txt2 = (TextView) findViewById(R.id.textView1);
-			        	//txt2.setText(initialDisplay + "");
-				 //grab and go
+			        	Intent myUserIntent = new Intent(ReportActivity.this, OutputActivity.class);
+		    			ReportActivity.this.startActivity(myUserIntent);
 			        }
-				 
 			    }
-
 			    @Override
 			    public void onNothingSelected(AdapterView<?> parentView) {
-			        // your code here
 			    }
-			
-		}); 
+		});
+		
+		Spinner spnLocale2;
+		spnLocale2 = (Spinner)findViewById(R.id.report_spinner_foods);
+		spnLocale2.setOnItemSelectedListener(new OnItemSelectedListener() {
+			 @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			        if (initialDisplayFood == true){
+			        	initialDisplayFood = false;
+			        } else {
+			        	Intent myReportIntent = new Intent(ReportActivity.this, OutputActivity.class);
+		        		ReportActivity.this.startActivity(myReportIntent);
+			        }
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    	Toast.makeText(getApplicationContext(), "I'm not selecting", Toast.LENGTH_SHORT).show();
+			    }
+		});
 		
 		
 		//TextView txt2 = (TextView) findViewById(R.id.textView1);
 		//dbh.insertText(); //removed but left for example
 		//txt2.setText(dbh.getCount());
 		}
+	
 	public void addItemsOnSpinnerFriends() {
+		
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_friends);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.name_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-	  }
+		String[] nArray;
+		nArray = new String[dbh.GetDBRecordCount("USERS")];
+		nArray = dbh.populateUserArray(nArray);
+		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
+		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adp2);
+		
+	 }
 
 	public void addItemsOnSpinnerFoods() {
+		
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_foods);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.food_array, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
+		String[] nArray;
+		nArray = new String[dbh.GetDBRecordCount("FOODS")];
+		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
+		nArray = dbh.populateFoodArray(nArray);
+		
+		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
+		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adp2);
+		
+		
 	  }
 	
 	@Override
@@ -108,5 +130,7 @@ public class ReportActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	
 
 }

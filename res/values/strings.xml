@@ -1,39 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-      <string-array name="food_array">
-        <item>Cheeseburger</item>
-        <item>Baked Chicken</item>
-        <item>Tacos</item>
-        <item>Celery</item>
-        <item>Mountain Dew</item>
-        <item>Kool-Aid</item>
-        <item>Hot Dogs</item>
-        <item>Popeye\'s Chicken</item>
-    </string-array>
     
-    <string-array name="name_array">
-        <item>John</item>
-        <item>Mary</item>
-        <item>Joe</item>
-        <item>Mark</item>
-        <item>Susan</item>
-        <item>Ryan</item>
-        <item>Tori</item>
-        <item>Matthew</item>
-    </string-array>
-
-    
+<string name="output_report_text_view">Report</string>
     <string name="activity_user_food">Food</string>
     <string name="activity_user_email">Friend\'s Email</string>
     <string name="activity_user_name">Friend\'s Name</string>
     <string name="activity_user_create_update">Create/Update</string>
-    
     <string name="activity_user_its_ok">It\'s OK</string>
     <string name="activity_user_love_it">Love It!</string>
     <string name="activity_user_hate_it">Hate It!</string>
-    
-    
     <string name="app_name">What2Eat</string>
     <string name="upload">UPDATE</string>
     <string name="action_settings">About</string>
@@ -50,11 +26,12 @@
     <string name="title_activity_user">Friends/Foods</string>
     <string name="home">Home</string>
     <string name="description">Image</string>
-    
     <string name="about_version">What2Eat 0.1&#169;</string>
     <string name="about_description">"A simple tool to track eating habits"</string>
     <string name="about_authors">"Sean Harrington\nJared Vibert\nSam Reinthaler"</string>
     <string name="about_github">"https://github.com/SeanHarrington/What2EatAndroid"</string>
     <string name="report_friends">Friends</string>
     <string name="report_foods">Foods</string>
+    <string name="title_activity_output">OutputActivity</string>
+
 </resources>

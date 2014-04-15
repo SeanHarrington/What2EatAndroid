@@ -9,15 +9,14 @@
         android:targetSdkVersion="19" />
 
     <application
-     
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="seanharrington.what2eat.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +26,8 @@
         <activity
             android:name="seanharrington.what2eat.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"
-            android:parentActivityName="seanharrington.what2eat.MainActivity" >
+            android:parentActivityName="seanharrington.what2eat.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
@@ -36,8 +35,8 @@
         <activity
             android:name="seanharrington.what2eat.ReportActivity"
             android:label="@string/title_activity_report"
-            android:screenOrientation="portrait"
-            android:parentActivityName="seanharrington.what2eat.MainActivity" >
+            android:parentActivityName="seanharrington.what2eat.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
@@ -45,11 +44,15 @@
         <activity
             android:name="seanharrington.what2eat.UserActivity"
             android:label="@string/title_activity_user"
-            android:screenOrientation="portrait"
-            android:parentActivityName="seanharrington.what2eat.MainActivity" >
+            android:parentActivityName="seanharrington.what2eat.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
+        </activity>
+        <activity
+            android:name="seanharrington.what2eat.OutputActivity"
+            android:label="@string/title_activity_output" >
         </activity>
     </application>
 
