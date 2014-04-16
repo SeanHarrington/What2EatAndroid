@@ -34,11 +34,18 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 
+	public String GetSantizedString(String v){
+		
+		v = v.replace("'","''");
+		return v;
+		
+		
+	}
 	
 	/////////////GET FUNCTIONS//////////////////////
 	public Integer getUserId(String sname) {
 		int user_id = -1;
-		sname = sname.toLowerCase(Locale.ENGLISH);
+		sname = GetSantizedString(sname.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + sname + "'", null);
 		if (c != null ) {
@@ -53,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public Integer GetFoodId(String name) {
 		int food_id = -1;
-		name = name.toLowerCase(Locale.ENGLISH);
+		name = GetSantizedString(name.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT food_id FROM FOODS WHERE food_name = '" + name + "'", null);
 		if (c != null ) {
@@ -271,7 +278,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public void addUser(String userName, String email) {
 		email = email.toLowerCase(Locale.ENGLISH);
-		userName = userName.toLowerCase(Locale.ENGLISH);
+		userName = GetSantizedString(userName.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		//leave these 6 here for wiping the table
 /*		qdb.execSQL("DROP TABLE USERS;");
@@ -296,8 +303,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	public void addFood(String userName, String foodName, Integer rating) {
 		
 		
-		userName = userName.toLowerCase(Locale.ENGLISH);
-		foodName = foodName.toLowerCase(Locale.ENGLISH);
+		userName = GetSantizedString(userName.toLowerCase(Locale.ENGLISH));
+		foodName = GetSantizedString(foodName.toLowerCase(Locale.ENGLISH));
 		int food_id = GetFoodId(foodName);
 		int user_id = getUserId(userName);
 		int users_foods_id = GetUsersFoodsId(user_id,food_id);
