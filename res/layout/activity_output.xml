@@ -9,9 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="seanharrington.what2eat.OutputActivity"
     tools:ignore="MergeRootFrame" >
+    
 
     <TextView
         android:id="@+id/output_report_text_view"
+        android:typeface="monospace"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

@@ -50,10 +50,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
         </activity>
+        
         <activity
             android:name="seanharrington.what2eat.OutputActivity"
-            android:label="@string/title_activity_output" >
+            android:label="@string/title_activity_output"
+            android:parentActivityName="seanharrington.what2eat.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="seanharrington.what2eat.MainActivity" />
         </activity>
+        
+       
     </application>
 
 </manifest>

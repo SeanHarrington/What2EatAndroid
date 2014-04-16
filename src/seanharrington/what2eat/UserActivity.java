@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Spinner;
+import android.widget.Spinner; 
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import java.util.Locale;
+
+
 
 public class UserActivity extends Activity implements OnClickListener {
 	Boolean initialDisplay = true;
@@ -44,9 +47,6 @@ public class UserActivity extends Activity implements OnClickListener {
 		
 		
 		
-		addItemsOnSpinnerFriends();
-		addItemsOnSpinnerFoods();
-		
 		Spinner spnLocale;
 		spnLocale = (Spinner)findViewById(R.id.spinner_user_name);
 		spnLocale.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -58,10 +58,12 @@ public class UserActivity extends Activity implements OnClickListener {
 			        	EditText txt = (EditText) findViewById(R.id.editText1); 
 			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_name);
 			        	String Text = spn1.getSelectedItem().toString();
+			        	Text = CapEachWord(Text); 
 			        	txt.setText(Text);
 			        	
 			        	EditText txt2 = (EditText) findViewById(R.id.editText2); 
 			        	String Text2 = dbh.GetUserEmail(dbh.getUserId(Text));
+			        	
 			        	txt2.setText(Text2);
 			        }
 			    }
@@ -90,6 +92,8 @@ public class UserActivity extends Activity implements OnClickListener {
 			    }
 		});
 		
+		addItemsOnSpinnerFriends();
+		addItemsOnSpinnerFoods();
 		
 	}
 	
@@ -158,27 +162,36 @@ public class UserActivity extends Activity implements OnClickListener {
 		String foodName = "";
 		
 		EditText txt = (EditText) findViewById(R.id.editText1); 
-    	userName = txt.getText().toString();
+    	userName = txt.getText().toString().toLowerCase(Locale.ENGLISH);
 		EditText txt1 = (EditText) findViewById(R.id.editText2); 
-    	email = txt1.getText().toString();
+    	email = txt1.getText().toString().toLowerCase(Locale.ENGLISH);
 		EditText txt2 = (EditText) findViewById(R.id.editText3); 
-    	foodName = txt2.getText().toString();
+    	foodName = txt2.getText().toString().toLowerCase(Locale.ENGLISH);
+    	
+    	
+    	
     	
 		switch (src.getId()) {
         	case R.id.button1:
+        		if (isValidEmail(email) ){
         		dbh.addUser(userName, email);
+        		}
+        		else{
+        			Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+        		
+        		}
         		break;
         	case R.id.button2:
         		dbh.addFood(userName, foodName, 3);
-        		Toast.makeText(getApplicationContext(), userName + " Loves " + foodName, Toast.LENGTH_SHORT).show();
+        		Toast.makeText(getApplicationContext(), CapEachWord(userName) + " Loves " + CapEachWord(foodName), Toast.LENGTH_SHORT).show();
         		break;
         	case R.id.button3:
         		dbh.addFood(userName, foodName, 2);
-        		Toast.makeText(getApplicationContext(), userName + " is ok with " + foodName, Toast.LENGTH_SHORT).show();
+        		Toast.makeText(getApplicationContext(), CapEachWord(userName) + " is ok with " + CapEachWord(foodName), Toast.LENGTH_SHORT).show();
         		break;
         	case R.id.button4:
         		dbh.addFood(userName, foodName, 1);
-        		Toast.makeText(getApplicationContext(), userName + " Hates " + foodName, Toast.LENGTH_SHORT).show();
+        		Toast.makeText(getApplicationContext(), CapEachWord(userName) + " Hates " + CapEachWord(foodName), Toast.LENGTH_SHORT).show();
         		break;
 		}
 		initialDisplay = true;
@@ -188,4 +201,28 @@ public class UserActivity extends Activity implements OnClickListener {
 		
 	}
 
+	public final static boolean isValidEmail(String target) {
+	    if (target == null) {
+	        return false;
+	    } 
+	    else if(target.matches("")){
+	    	return true;
+	    }
+	    else {
+	        return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+	    }
+	}
+	
+	public String CapEachWord(String Text){
+		
+		StringBuilder b = new StringBuilder(Text);
+		int i = 0;
+		do {
+		  b.replace(i, i + 1, b.substring(i,i + 1).toUpperCase(Locale.ENGLISH));
+		  i =  b.indexOf(" ", i) + 1;
+		} while (i > 0 && i < b.length());
+		    
+		return b.toString();
+	}
+	
 }

@@ -40,6 +40,7 @@ public class OutputActivity extends Activity {
 					for (int i = 0; i < nArray.length; i=i+2) {
 						String food_name = "";
 						String food_rating = "";
+						
 						food_name = dbh.GetFoodName(nArray[i]);
 						if (nArray[i+1] == 1){
 							food_rating = "Hates It!";
@@ -50,7 +51,7 @@ public class OutputActivity extends Activity {
 						else{
 							food_rating = "Loves It!";						
 						}
-						outputString = outputString + food_name + " -- " + food_rating + "\n";
+						outputString = outputString + padRight(dbh.CapEachWord(food_name),40) + " -- " + food_rating + "\n";
 					}
 					txt.setText(outputString);
 				}
@@ -79,7 +80,7 @@ public class OutputActivity extends Activity {
 						else{
 							food_rating = "Loves It!";						
 						}
-						outputString = outputString + user_name + " -- " + food_rating + "\n";
+						outputString = outputString + padRight(dbh.CapEachWord(user_name),40) + " -- " + food_rating + "\n";
 					}
 					txt.setText(outputString);
 				}
@@ -119,4 +120,10 @@ public class OutputActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	public static String padRight(String s, int n) {
+	      
+	     return String.format("%-22s", s);
+	}
+	
 }

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper{
 	final static String DB_NAME = "what2eat.db";
@@ -33,8 +34,11 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	}
 
+	
+	/////////////GET FUNCTIONS//////////////////////
 	public Integer getUserId(String sname) {
 		int user_id = -1;
+		sname = sname.toLowerCase(Locale.ENGLISH);
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE name = '" + sname + "'", null);
 		if (c != null ) {
@@ -49,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public Integer GetFoodId(String name) {
 		int food_id = -1;
+		name = name.toLowerCase(Locale.ENGLISH);
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		Cursor c = qdb.rawQuery("SELECT food_id FROM FOODS WHERE food_name = '" + name + "'", null);
 		if (c != null ) {
@@ -90,8 +95,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		return user_name;
 	}
-	
-	
+		
 	public Integer GetUsersFoodsId(Integer user_id, Integer food_id) {
 		int uf_id = -1;
 		SQLiteDatabase qdb = this.getWritableDatabase();
@@ -126,7 +130,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		Cursor c = qdb.rawQuery("SELECT count(*) FROM " + tableName, null);
 		if (c != null ) {
 			if (c.moveToFirst()) {
-		count= c.getInt(0);
+				count= c.getInt(0);
 			}
 		}
 		c.close();
@@ -164,10 +168,12 @@ public class DBHelper extends SQLiteOpenHelper{
 		return count;
 	}
 	
+	//////////////GET AND DO SOMETHING FUNCTIONS//////////////
+	
 	public Integer[] populateUserReport(Integer[] nArray, int userId){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT food_id, rating, avg_rating FROM USERS_FOODS WHERE user_id = " + userId, null);
+		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.food_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, FOODS.food_name FROM USERS_FOODS, FOODS WHERE USERS_FOODS.food_id = FOODS.food_id and user_id = " + userId + " ORDER BY FOODS.food_name", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -197,7 +203,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public Integer[] populateFoodReport(Integer[] nArray, int foodId){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT user_id, rating, avg_rating FROM USERS_FOODS WHERE food_id = " + foodId, null);
+		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.user_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, USERS.name FROM USERS_FOODS, USERS  WHERE USERS.id = USERS_FOODS.user_id and USERS_FOODS.food_id = " + foodId + " ORDER BY USERS.name", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -223,17 +229,17 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		return nArray;	
 	}
-	
-	
-	public String[] populateUserArray(String[] nArray){
+		
+	public String[] populateUserArray(String[] nArray)	
+{
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT name FROM " + USERS, null);
+		Cursor c = qdb.rawQuery("SELECT name FROM USERS ORDER BY name ASC;", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
     				String text = c.getString(0);
-    				nArray[iCount] = text;
+    				nArray[iCount] = CapEachWord(text);
     				iCount = iCount + 1;
     			}
     			while (c.moveToNext());
@@ -246,12 +252,12 @@ public class DBHelper extends SQLiteOpenHelper{
 	public String[] populateFoodArray(String[] nArray){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT food_name FROM " + FOODS, null);
+		Cursor c = qdb.rawQuery("SELECT food_name FROM FOODS ORDER BY food_name ASC;", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
     				String text = c.getString(0);
-    				nArray[iCount] = text;
+    				nArray[iCount] = CapEachWord(text);
     				iCount = iCount + 1;
     			}
     			while (c.moveToNext());
@@ -261,11 +267,20 @@ public class DBHelper extends SQLiteOpenHelper{
 	return nArray;
 	}
 	
+	////////////////SEND FUNCTIONS///////////
+	
 	public void addUser(String userName, String email) {
+		email = email.toLowerCase(Locale.ENGLISH);
+		userName = userName.toLowerCase(Locale.ENGLISH);
 		SQLiteDatabase qdb = this.getWritableDatabase();
-		//leave these 2 here for wiping the table
-		//qdb.execSQL("DROP TABLE USERS;");
-		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+		//leave these 6 here for wiping the table
+/*		qdb.execSQL("DROP TABLE USERS;");
+		qdb.execSQL("DROP TABLE FOODS;");
+		qdb.execSQL("DROP TABLE USERS_FOODS;");
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+	*/
 		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
 		if (c != null ) {
 				if  (c.moveToFirst()) {
@@ -280,19 +295,28 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public void addFood(String userName, String foodName, Integer rating) {
 		
+		
+		userName = userName.toLowerCase(Locale.ENGLISH);
+		foodName = foodName.toLowerCase(Locale.ENGLISH);
 		int food_id = GetFoodId(foodName);
 		int user_id = getUserId(userName);
 		int users_foods_id = GetUsersFoodsId(user_id,food_id);
+		
+				
 		if (user_id < 0){
 			
 		}
 		//is it a new food?
+		
+		
 		else if (food_id < 0){
-			//yes, then double insert			
+			//yes, then double insert			emailemail
 			SQLiteDatabase qdb = this.getWritableDatabase();
 			qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodName +"');");
 			qdb.close();
+			
 			food_id = GetFoodId(foodName);
+			
 			qdb = this.getWritableDatabase();
 			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, rating, old_rating, updated, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ rating +",0,1," + rating +");");
 			qdb.close();
@@ -324,6 +348,8 @@ public class DBHelper extends SQLiteOpenHelper{
 			
 		
 	}
+	
+	///////////////DEMO FUNCTIONS///////////
 	
 	public boolean insertText(){
 		try{
@@ -365,6 +391,18 @@ public class DBHelper extends SQLiteOpenHelper{
 			return "Errord Out";
 		}
 		return toReturn;
+	}
+	
+public String CapEachWord(String Text){
+		
+		StringBuilder b = new StringBuilder(Text);
+		int i = 0;
+		do {
+		  b.replace(i, i + 1, b.substring(i,i + 1).toUpperCase(Locale.ENGLISH));
+		  i =  b.indexOf(" ", i) + 1;
+		} while (i > 0 && i < b.length());
+		    
+		return b.toString();
 	}
 
 }
