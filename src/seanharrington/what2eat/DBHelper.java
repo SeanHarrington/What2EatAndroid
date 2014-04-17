@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
 	public String GetSantizedString(String v){
 		
-		v = v.replace("'","''");
+		v = v.replace("'","");
 		return v;
 		
 		
@@ -240,7 +240,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	public String[] populateUserArray(String[] nArray)	
 {
 		SQLiteDatabase qdb = this.getReadableDatabase();
-		int iCount = 0;
+		nArray[0] = "Select a Friend";
+		int iCount = 1;
 		Cursor c = qdb.rawQuery("SELECT name FROM USERS ORDER BY name ASC;", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
@@ -258,7 +259,8 @@ public class DBHelper extends SQLiteOpenHelper{
 	
 	public String[] populateFoodArray(String[] nArray){
 		SQLiteDatabase qdb = this.getReadableDatabase();
-		int iCount = 0;
+		nArray[0] = "Select a Food";
+		int iCount = 1;
 		Cursor c = qdb.rawQuery("SELECT food_name FROM FOODS ORDER BY food_name ASC;", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
@@ -281,17 +283,17 @@ public class DBHelper extends SQLiteOpenHelper{
 		userName = GetSantizedString(userName.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		//leave these 6 here for wiping the table
-/*		qdb.execSQL("DROP TABLE USERS;");
+		//qdb.execSQL("DROP TABLE USERS;");
 		qdb.execSQL("DROP TABLE FOODS;");
 		qdb.execSQL("DROP TABLE USERS_FOODS;");
 		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
 		qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
-		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
-	*/
+		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+	
 		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
 		if (c != null ) {
 				if  (c.moveToFirst()) {
-						qdb.execSQL("UPDATE USERS SET USERSemail = \""+ email + "\" WHERE name = \""+ userName + "\";");
+						qdb.execSQL("UPDATE USERS SET email = \""+ email + "\" WHERE name = \""+ userName + "\";");
 				}
 				else{
 					qdb.execSQL("INSERT INTO USERS(name,email) VALUES (\""+ userName + "\",\""+ email + "\");");

@@ -35,12 +35,13 @@ public class ReportActivity extends Activity{
 		spnLocale.setOnItemSelectedListener(new OnItemSelectedListener() {
 			 @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			        if (initialDisplay == true){
-			        	initialDisplay = false;
+				 Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_friends);
+		        	String Text = spn1.getSelectedItem().toString();
+		        	
+				 if (Text.equals("Select a Friend")){
+			        	
 			        } else {
 			        
-			        	Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_friends);
-			        	String Text = spn1.getSelectedItem().toString();
 			        	
 			        	Intent myUserIntent = new Intent(ReportActivity.this, OutputActivity.class);
 			        	myUserIntent.putExtra("output_type","user");
@@ -58,11 +59,12 @@ public class ReportActivity extends Activity{
 		spnLocale2.setOnItemSelectedListener(new OnItemSelectedListener() {
 			 @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			        if (initialDisplayFood == true){
-			        	initialDisplayFood = false;
+				 Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_foods);
+		        	String Text = spn1.getSelectedItem().toString();
+		        	   
+				 if (Text.equals("Select a Food")){
+			        	
 			        } else {
-			        	Spinner spn1 = (Spinner)findViewById(R.id.report_spinner_foods);
-			        	String Text = spn1.getSelectedItem().toString();
 			        	
 			        	Intent myReportIntent = new Intent(ReportActivity.this, OutputActivity.class);
 			        	myReportIntent.putExtra("output_type","food");
@@ -86,7 +88,7 @@ public class ReportActivity extends Activity{
 		
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_friends);
 		String[] nArray;
-		nArray = new String[dbh.GetDBRecordCount("USERS")];
+		nArray = new String[dbh.GetDBRecordCount("USERS")+1];
 		nArray = dbh.populateUserArray(nArray);
 		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
 		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,7 +100,7 @@ public class ReportActivity extends Activity{
 		
 		Spinner spinner = (Spinner) findViewById(R.id.report_spinner_foods);
 		String[] nArray;
-		nArray = new String[dbh.GetDBRecordCount("FOODS")];
+		nArray = new String[dbh.GetDBRecordCount("FOODS")+1];
 		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
 		nArray = dbh.populateFoodArray(nArray);
 		

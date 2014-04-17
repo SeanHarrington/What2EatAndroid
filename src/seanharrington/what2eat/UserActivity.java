@@ -52,12 +52,17 @@ public class UserActivity extends Activity implements OnClickListener {
 		spnLocale.setOnItemSelectedListener(new OnItemSelectedListener() {
 			 @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			        if (initialDisplay == true){
-			        	initialDisplay = false;
-			        } else {
+				 Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_name);
+				 String Text = spn1.getSelectedItem().toString();
+				 if (Text.equals("Select a Friend")){
+					 
+					 
+				 }
+				// else if (initialDisplay == true){
+			     //   	initialDisplay = false;
+			      //  } 
+				 else {
 			        	EditText txt = (EditText) findViewById(R.id.editText1); 
-			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_name);
-			        	String Text = spn1.getSelectedItem().toString();
 			        	Text = CapEachWord(Text); 
 			        	txt.setText(Text);
 			        	
@@ -77,12 +82,17 @@ public class UserActivity extends Activity implements OnClickListener {
 		spnLocale2.setOnItemSelectedListener(new OnItemSelectedListener() {
 			 @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			        if (initialDisplayFood == true){
-			        	initialDisplayFood = false;
-			        } else {
+			  	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_food);
+		       	String Text = spn1.getSelectedItem().toString();
+		     	 if (Text.equals("Select a Food")){
+					 
+					 
+				 }	
+				 //else if (initialDisplayFood == true){
+			       // 	initialDisplayFood = false;
+			        //} 
+				 else {
 			        	EditText txt = (EditText) findViewById(R.id.editText3); 
-			        	Spinner spn1 = (Spinner)findViewById(R.id.spinner_user_food);
-			        	String Text = spn1.getSelectedItem().toString();
 			        	txt.setText(Text);
 			        }
 			    }
@@ -101,7 +111,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_name);
 		String[] nArray;
-		nArray = new String[dbh.GetDBRecordCount("USERS")];
+		nArray = new String[dbh.GetDBRecordCount("USERS")+1];
 		nArray = dbh.populateUserArray(nArray);
 		ArrayAdapter<String> adp2=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,nArray);
 		adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -113,7 +123,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_user_food);
 		String[] nArray;
-		nArray = new String[dbh.GetDBRecordCount("FOODS")];
+		nArray = new String[dbh.GetDBRecordCount("FOODS")+1];
 		//Toast.makeText(getApplicationContext(), "" + dbh.GetDBRecordCount("FOODS"), Toast.LENGTH_SHORT).show();
 		nArray = dbh.populateFoodArray(nArray);
 		
