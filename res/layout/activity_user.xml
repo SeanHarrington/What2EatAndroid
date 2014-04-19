@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
+        android:background="#DDDDDD"
         />
 
     <EditText
@@ -70,7 +71,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true" 
+        android:background="#DDDDDD"/>
 
     <Button
         android:id="@+id/button4"
