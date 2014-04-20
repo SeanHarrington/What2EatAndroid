@@ -29,7 +29,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_user);
 		dbh = new DBHelper(this); 
 		
-		//create update user button
+		//create update user button 
 		Button buttontest = (Button) findViewById(R.id.button1);
 		buttontest.setOnClickListener(this);
 		

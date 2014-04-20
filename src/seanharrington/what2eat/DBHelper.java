@@ -180,7 +180,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public Integer[] populateUserReport(Integer[] nArray, int userId){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.food_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, FOODS.food_name FROM USERS_FOODS, FOODS WHERE USERS_FOODS.food_id = FOODS.food_id and user_id = " + userId + " ORDER BY FOODS.food_name", null);
+		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.food_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, FOODS.food_name FROM USERS_FOODS, FOODS WHERE USERS_FOODS.food_id = FOODS.food_id and user_id = " + userId + " ORDER BY USERS_FOODS.rating DESC, FOODS.food_name", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -210,7 +210,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public Integer[] populateFoodReport(Integer[] nArray, int foodId){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.user_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, USERS.name FROM USERS_FOODS, USERS  WHERE USERS.id = USERS_FOODS.user_id and USERS_FOODS.food_id = " + foodId + " ORDER BY USERS.name", null);
+		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.user_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, USERS.name FROM USERS_FOODS, USERS  WHERE USERS.id = USERS_FOODS.user_id and USERS_FOODS.food_id = " + foodId + " ORDER BY USERS_FOODS.rating DESC, USERS.name", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {
@@ -283,12 +283,14 @@ public class DBHelper extends SQLiteOpenHelper{
 		userName = GetSantizedString(userName.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		//leave these 6 here for wiping the table
+		//qdb.execSQL("DROP TABLE USERS_FOODS;");
 		//qdb.execSQL("DROP TABLE USERS;");
-		qdb.execSQL("DROP TABLE FOODS;");
-		qdb.execSQL("DROP TABLE USERS_FOODS;");
-		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
-		qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
+		//qdb.execSQL("DROP TABLE FOODS;");
+	
+		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
 		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+		//qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
+		
 	
 		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
 		if (c != null ) {
