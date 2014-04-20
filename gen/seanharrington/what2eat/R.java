@@ -27,6 +27,7 @@ public final class R {
         public static final int ic_action_ic_action_event=0x7f020002;
         public static final int ic_action_new_event=0x7f020003;
         public static final int ic_launcher=0x7f020004;
+        public static final int what2eat_splash=0x7f020005;
     }
     public static final class id {
         public static final int about_description=0x7f080003;
@@ -61,8 +62,8 @@ public final class R {
         public static final int activity_main=0x7f030001;
         public static final int activity_output=0x7f030002;
         public static final int activity_report=0x7f030003;
-        public static final int activity_user=0x7f030004;
-        public static final int fragment_user=0x7f030005;
+        public static final int activity_splash=0x7f030004;
+        public static final int activity_user=0x7f030005;
         public static final int upload_main=0x7f030006;
     }
     public static final class menu {
@@ -70,7 +71,8 @@ public final class R {
         public static final int main=0x7f070001;
         public static final int output=0x7f070002;
         public static final int report=0x7f070003;
-        public static final int user=0x7f070004;
+        public static final int splash=0x7f070004;
+        public static final int user=0x7f070005;
     }
     public static final class string {
         public static final int about=0x7f05000b;
@@ -97,9 +99,11 @@ public final class R {
         public static final int report_foods=0x7f05001d;
         public static final int report_friends=0x7f05001c;
         public static final int report_title=0x7f050012;
+        public static final int splash=0x7f050020;
         public static final int title_activity_about=0x7f05000e;
         public static final int title_activity_output=0x7f05001e;
         public static final int title_activity_report=0x7f050014;
+        public static final int title_activity_splash=0x7f05001f;
         public static final int title_activity_user=0x7f050015;
         public static final int upload=0x7f050009;
         public static final int user_data=0x7f05000c;

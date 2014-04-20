@@ -178,11 +178,21 @@ public class UserActivity extends Activity implements OnClickListener {
 		EditText txt2 = (EditText) findViewById(R.id.editText3); 
     	foodName = txt2.getText().toString().toLowerCase(Locale.ENGLISH);
     	
+    	if (userName.equals("friend's name")){
+    		Toast.makeText(getApplicationContext(), "Invalid Friend's Name", Toast.LENGTH_SHORT).show();
+    	}
     	
     	
+    	else{
     	
+    		if (email.equals("friend's email")){
+    			
+    			email = "";
+    		}
+    		
 		switch (src.getId()) {
-        	case R.id.button1:
+        	
+		case R.id.button1:
         		if (isValidEmail(email) ){
         		dbh.addUser(userName, email);
         		}
@@ -208,7 +218,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		initialDisplayFood = true;
 		addItemsOnSpinnerFriends();
 		addItemsOnSpinnerFoods();
-		
+    	}
 	}
 
 	public final static boolean isValidEmail(String target) {

@@ -16,6 +16,7 @@
         <activity
             android:name="seanharrington.what2eat.MainActivity"
             android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,7 +51,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
         </activity>
-        
         <activity
             android:name="seanharrington.what2eat.OutputActivity"
             android:label="@string/title_activity_output"
@@ -60,8 +60,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="seanharrington.what2eat.MainActivity" />
         </activity>
+        <activity
+            android:name="seanharrington.what2eat.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+             >
+    
+ 
+        </activity>
         
-       
+        
     </application>
 
 </manifest>

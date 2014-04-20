@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity implements OnClickListener{
 
+	Integer doOnce = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +24,11 @@ public class MainActivity extends Activity implements OnClickListener{
 		buttontest1.setOnClickListener(this);
 		
 		
+		if (doOnce < 1){
+			doOnce++;
+			Intent myUserIntent = new Intent(MainActivity.this, SplashActivity.class);
+			MainActivity.this.startActivity(myUserIntent);
+		}
 	}
 
 	@Override

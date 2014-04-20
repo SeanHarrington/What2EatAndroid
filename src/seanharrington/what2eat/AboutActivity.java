@@ -1,4 +1,4 @@
-package seanharrington.what2eat;
+package seanharrington.what2eat; 
 
 import android.app.Activity;
 import android.os.Bundle;
