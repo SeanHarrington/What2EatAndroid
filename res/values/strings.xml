@@ -33,5 +33,7 @@
     <string name="report_foods">Foods</string>
     <string name="title_activity_output">OutputActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
-	<string name="splash">SplashActivity</string>
+    <string name="splash">SplashActivity</string>
+    <string name="title_activity_jsonparser">JSONParser</string>
+
 </resources>
