@@ -115,6 +115,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			//Toast.makeText(getApplicationContext(), "UPDATE is clicked", Toast.LENGTH_SHORT).show();
 			
 			new getData().execute();	
+			new sendData().execute();
 			
 			
 			return true;
@@ -145,26 +146,26 @@ public class MainActivity extends Activity implements OnClickListener{
 		}		
 	}
 	
-	private class getData extends AsyncTask<Void, Void, Void> {
+	private class sendData extends AsyncTask<Void, Void, Void> {
 		InputStream inputStream = null;
 	    String result = ""; 
-	    String url_select = url_return;
+	    String url_select = url_send;
 	
 
 		protected void onPreExecute() {
-			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
+					
 		}
 
 		protected Void doInBackground(Void... params) {
-			//create an arry
+			
+			//we need to get a prepared array of values to be uploaded
+			
+			
 			String[] nResponseArray = new String[dbh.getEmailCount()];
 			String concat_string= "";
-			//populate it with email adds
 			nResponseArray = dbh.getEmailList();
 			for (int i = 0; i < nResponseArray.length; i=i+1){
 				concat_string = url_select + nResponseArray[i];
-			//begin loop on each email
-			//create new url concat of url_selec and email
 			try {
 				URI uri = new URI(concat_string);
 				HttpClient httpclient = new DefaultHttpClient();
@@ -208,38 +209,117 @@ public class MainActivity extends Activity implements OnClickListener{
 		}
 
 		protected void pushToLocal(String unParsed, String email){
-			
 			unParsed = unParsed.replace(";",",");
-			
 			int commaCount = unParsed.length() - unParsed.replace(",", "").length();
-			
 			String[] nResponseArray = new String[commaCount];
-
-			
 			String[] parts = unParsed.split(",");
 			
 			for (int i = 0; i < commaCount; i=i+1) {
-			nResponseArray[i] = parts[i];
-			//now we have an array where each thing is seperated
-			
+				nResponseArray[i] = parts[i];
+				//now we have an array where each thing is seperated
 			}
-			
 			for (int i = 0; i < nResponseArray.length; i=i+3){
-			String food_name = nResponseArray[i];
-			Integer sum_rating = Integer.parseInt(nResponseArray[i+1]);
-			Integer sum_vote = Integer.parseInt(nResponseArray[i+2]);
-			Integer avg_rating = sum_rating/sum_vote;
-			//UPDATE USERS_FOODS SET avg_rating = #{avgr} WHERE user_id = #{name_id} and food_id = #{food_id}"
-			
-			finalResult.setText(food_name);
-			
-			dbh.addSoloFood(food_name);
-			dbh.updateUser(dbh.getUserIdbyEmail(email), dbh.GetFoodId(food_name), avg_rating);
-			
+				String food_name = nResponseArray[i];
+				Integer sum_rating = Integer.parseInt(nResponseArray[i+1]);
+				Integer sum_vote = Integer.parseInt(nResponseArray[i+2]);
+				Integer avg_rating = sum_rating/sum_vote;
+				//UPDATE USERS_FOODS SET avg_rating = #{avgr} WHERE user_id = #{name_id} and food_id = #{food_id}"
+				finalResult.setText(food_name);
+				dbh.addSoloFood(food_name);
+				dbh.updateUser(dbh.getUserIdbyEmail(email), dbh.GetFoodId(food_name), avg_rating);
 			}
-			
 		}
+	
 		
+		protected void onPostExecute(Void donothing) {
+			//parse JSON data
+	        	//pushToLocal(result);
+	        	//here is were we will send the string to the DBHelper to be parsed and updated.
+			}		
+		
+		
+	}
+	
+ 	private class getData extends AsyncTask<Void, Void, Void> {
+		InputStream inputStream = null;
+	    String result = ""; 
+	    String url_select = url_return;
+	
+
+		protected void onPreExecute() {
+			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
+		}
+
+		protected Void doInBackground(Void... params) {
+			String[] nResponseArray = new String[dbh.getEmailCount()];
+			String concat_string= "";
+			nResponseArray = dbh.getEmailList();
+			for (int i = 0; i < nResponseArray.length; i=i+1){
+				concat_string = url_select + nResponseArray[i];
+			try {
+				URI uri = new URI(concat_string);
+				HttpClient httpclient = new DefaultHttpClient();
+	            HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
+	            HttpEntity httpEntity = httpResponse.getEntity();
+	            inputStream = httpEntity.getContent(); 		        
+			 } catch (UnsupportedEncodingException e1) {
+		            Log.e("UnsupportedEncodingException", e1.toString());
+		            e1.printStackTrace();
+		        } catch (ClientProtocolException e2) {
+		            Log.e("ClientProtocolException", e2.toString());
+		            e2.printStackTrace();
+		        } catch (IllegalStateException e3) {
+		            Log.e("IllegalStateException", e3.toString());
+		            e3.printStackTrace();
+		        } catch (IOException e4) {
+		            Log.e("IOException", e4.toString());
+		            e4.printStackTrace();
+		        } catch (URISyntaxException e) {
+		        	Log.e("URISyntaxException ", e.toString());
+					e.printStackTrace();
+				}
+		        // Convert response to string using String Builder
+		        try {
+		            BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
+		            StringBuilder sBuilder = new StringBuilder();
+		            String line = null;
+		            line = bReader.readLine();
+		            
+		                sBuilder.append(line + "\n");
+		            
+		            inputStream.close();
+		            result = sBuilder.toString();
+		            pushToLocal(result,nResponseArray[i]);
+		        } catch (Exception e) {
+		            Log.e("StringBuilding & BufferedReader", "Error converting result " + e.toString());
+		        }
+		        
+			}
+				return null;
+		}
+
+		protected void pushToLocal(String unParsed, String email){
+			unParsed = unParsed.replace(";",",");
+			int commaCount = unParsed.length() - unParsed.replace(",", "").length();
+			String[] nResponseArray = new String[commaCount];
+			String[] parts = unParsed.split(",");
+			
+			for (int i = 0; i < commaCount; i=i+1) {
+				nResponseArray[i] = parts[i];
+				//now we have an array where each thing is seperated
+			}
+			for (int i = 0; i < nResponseArray.length; i=i+3){
+				String food_name = nResponseArray[i];
+				Integer sum_rating = Integer.parseInt(nResponseArray[i+1]);
+				Integer sum_vote = Integer.parseInt(nResponseArray[i+2]);
+				Integer avg_rating = sum_rating/sum_vote;
+				//UPDATE USERS_FOODS SET avg_rating = #{avgr} WHERE user_id = #{name_id} and food_id = #{food_id}"
+				finalResult.setText(food_name);
+				dbh.addSoloFood(food_name);
+				dbh.updateUser(dbh.getUserIdbyEmail(email), dbh.GetFoodId(food_name), avg_rating);
+			}
+		}
+	
 		
 		protected void onPostExecute(Void donothing) {
 			//parse JSON data

@@ -71,8 +71,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		qdb.close(); 
 		return user_id;
 	}
-	
-	
+		
 	public Integer GetFoodId(String name) {
 		int food_id = -1;
 		name = GetSantizedString(name.toLowerCase(Locale.ENGLISH));
@@ -203,6 +202,46 @@ public class DBHelper extends SQLiteOpenHelper{
 	qdb.close(); 
 	return iCount;
 }
+	
+	public String getPreparedUpload(){
+		String PrepString = "";
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		Cursor c = qdb.rawQuery("SELECT USERS.email, FOODS.food_name, USERS_FOODS.rating, USERS_FOODS.old_rating from USERS, FOODS, USERS_FOODS WHERE USERS.email != '' AND USERS_FOODS.food_id = FOODS.food_id AND USERS_FOODS.user_id = USERS.user_id AND USERS_FOODS.updated > 0", null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				String email = c.getString(c.getColumnIndex("email")); 
+    				String food_name = c.getString(c.getColumnIndex("food_name"));
+    				Integer rating = c.getInt(c.getColumnIndex("rating"));
+    				Integer old_rating = c.getInt(c.getColumnIndex("old_rating"));
+    				Integer movement = rating - old_rating;
+    				Integer voted = 0;
+    				if (old_rating > 0){
+    					voted = 0;
+    				}
+    				else{
+    					voted = 1;
+    				}
+    						
+    				PrepString = PrepString + email + "," + food_name + "," + movement + "," + voted + ","; 
+    				
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+				
+		c.close();
+		qdb.close();
+		
+		
+		
+		
+		
+		
+		//select statement for anything that has been updated.
+		
+		return PrepString;
+	}
 	
 	public String[] getEmailList(){
 		SQLiteDatabase qdb = this.getReadableDatabase();
@@ -430,52 +469,26 @@ public class DBHelper extends SQLiteOpenHelper{
 	//unfinished
 	public void updateUser(int user_id, int food_id, int avg_rating){
 	//similar to addFood but only test for existancce in users_foods	
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		int old_rating = -1;
+		Cursor c = qdb.rawQuery("SELECT rating from USERS_FOODS where food_id = " + food_id + " and user_id = "+ user_id, null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				old_rating= c.getInt(0);
+			}
+		}
+		c.close();
+		
+		if (old_rating > -1){
+			qdb.execSQL("UPDATE USERS_FOODS SET avg_rating = " + avg_rating + ";");
+		}
+		else{
+			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ avg_rating +");");
+		}
+		qdb.close();
 		
 	}
 	
-	///////////////DEMO FUNCTIONS///////////
-	
-	public boolean insertText(){
-		try{
-			//DBHelper appDB = new DBHelper(context);
-			SQLiteDatabase qdb = this.getWritableDatabase();
-			//Log.d("DB Insert: ", "INSERT OR REPLACE INTO " + USERS + " (text) Values ("+ text + ");");
-			qdb.execSQL("INSERT INTO USERS(name,email) VALUES ('Sean','sean@you.com');");
-			qdb.close();
-		}
-		catch(SQLiteException se){
-			Log.d("DB Insert Error: ",se.toString());
-			return false;
-		}
-		return true;
-	}
-
-	public String getCount(){
-		String toReturn = "";
-		try{
-			//DBHelper appDB = new DBHelper(context);
-			SQLiteDatabase qdb = this.getReadableDatabase();
-			//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + EXAMPLE_TABLE + " (text VARCHAR);");
-			Cursor c = qdb.rawQuery("SELECT * FROM " +
-	    			USERS, null);
-			if (c != null ) {
-	    		if  (c.moveToFirst()) {
-	    			do {
-	    				String text = c.getString(c.getColumnIndex("email"));
-	    				toReturn += text + "\n";
-	    				
-	    			}
-	    			while (c.moveToNext());
-	    		}
-			}
-			qdb.close(); 
-		}
-		catch(SQLiteException se){
-			Log.d("DB Select Error: ",se.toString());
-			return "Errord Out";
-		}
-		return toReturn;
-	}
 	
 	public String CapEachWord(String Text){
 		

@@ -68,11 +68,12 @@ public final class R {
     }
     public static final class menu {
         public static final int about=0x7f070000;
-        public static final int main=0x7f070001;
-        public static final int output=0x7f070002;
-        public static final int report=0x7f070003;
-        public static final int splash=0x7f070004;
-        public static final int user=0x7f070005;
+        public static final int async=0x7f070001;
+        public static final int main=0x7f070002;
+        public static final int output=0x7f070003;
+        public static final int report=0x7f070004;
+        public static final int splash=0x7f070005;
+        public static final int user=0x7f070006;
     }
     public static final class string {
         public static final int about=0x7f05000b;
@@ -101,6 +102,7 @@ public final class R {
         public static final int report_title=0x7f050012;
         public static final int splash=0x7f050020;
         public static final int title_activity_about=0x7f05000e;
+        public static final int title_activity_async=0x7f050022;
         public static final int title_activity_jsonparser=0x7f050021;
         public static final int title_activity_output=0x7f05001e;
         public static final int title_activity_report=0x7f050014;

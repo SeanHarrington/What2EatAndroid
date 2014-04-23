@@ -35,5 +35,6 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="splash">SplashActivity</string>
     <string name="title_activity_jsonparser">JSONParser</string>
+    <string name="title_activity_async">AsyncActivity</string>
 
 </resources>
