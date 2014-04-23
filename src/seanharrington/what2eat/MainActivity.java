@@ -62,7 +62,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity implements OnClickListener{
 		
-	private static String url_return = "http://54.187.104.37/return.php?email=seanarrington7@mail.csuchico.edu";
+	DBHelper dbh;
+	private static String url_return = "http://54.187.104.37/return.php?email=";
 	private static String url_send = "http://54.187.104.37/send.php";
 	private TextView finalResult;
 	
@@ -75,7 +76,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		dbh = new DBHelper(this); 
+		
 		finalResult = (TextView) findViewById(R.id.maintitle);
 		Button buttontest = (Button) findViewById(R.id.main_user_data);
 		buttontest.setOnClickListener(this);
@@ -154,9 +156,17 @@ public class MainActivity extends Activity implements OnClickListener{
 		}
 
 		protected Void doInBackground(Void... params) {
-			
+			//create an arry
+			String[] nResponseArray = new String[dbh.getEmailCount()];
+			String concat_string= "";
+			//populate it with email adds
+			nResponseArray = dbh.getEmailList();
+			for (int i = 0; i < nResponseArray.length; i=i+1){
+				concat_string = url_select + nResponseArray[i];
+			//begin loop on each email
+			//create new url concat of url_selec and email
 			try {
-				URI uri = new URI(url_select);
+				URI uri = new URI(concat_string);
 				HttpClient httpclient = new DefaultHttpClient();
 	            HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
 	            HttpEntity httpEntity = httpResponse.getEntity();
@@ -188,15 +198,52 @@ public class MainActivity extends Activity implements OnClickListener{
 		            
 		            inputStream.close();
 		            result = sBuilder.toString();
+		            pushToLocal(result,nResponseArray[i]);
 		        } catch (Exception e) {
 		            Log.e("StringBuilding & BufferedReader", "Error converting result " + e.toString());
 		        }
+		        
+			}
 				return null;
 		}
 
+		protected void pushToLocal(String unParsed, String email){
+			
+			unParsed = unParsed.replace(";",",");
+			
+			int commaCount = unParsed.length() - unParsed.replace(",", "").length();
+			
+			String[] nResponseArray = new String[commaCount];
+
+			
+			String[] parts = unParsed.split(",");
+			
+			for (int i = 0; i < commaCount; i=i+1) {
+			nResponseArray[i] = parts[i];
+			//now we have an array where each thing is seperated
+			
+			}
+			
+			for (int i = 0; i < nResponseArray.length; i=i+3){
+			String food_name = nResponseArray[i];
+			Integer sum_rating = Integer.parseInt(nResponseArray[i+1]);
+			Integer sum_vote = Integer.parseInt(nResponseArray[i+2]);
+			Integer avg_rating = sum_rating/sum_vote;
+			//UPDATE USERS_FOODS SET avg_rating = #{avgr} WHERE user_id = #{name_id} and food_id = #{food_id}"
+			
+			finalResult.setText(food_name);
+			
+			dbh.addSoloFood(food_name);
+			dbh.updateUser(dbh.getUserIdbyEmail(email), dbh.GetFoodId(food_name), avg_rating);
+			
+			}
+			
+		}
+		
+		
 		protected void onPostExecute(Void donothing) {
 			//parse JSON data
-	        	finalResult.setText(result);
+	        	//pushToLocal(result);
 	        	//here is were we will send the string to the DBHelper to be parsed and updated.
 			}		
 	}

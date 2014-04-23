@@ -12,7 +12,6 @@ public class DBHelper extends SQLiteOpenHelper{
 	final static String DB_NAME = "what2eat.db";
 	final static int DB_VERSION = 1;
 	private final String USERS = "USERS";
-	//private final String USERS_FOODS = "USERS_FOODS";
 	private final String FOODS = "FOODS";
 	Context context;
 
@@ -57,6 +56,22 @@ public class DBHelper extends SQLiteOpenHelper{
 		qdb.close(); 
 		return user_id;
 	}
+	
+	public Integer getUserIdbyEmail(String sname) {
+		int user_id = -1;
+		sname = GetSantizedString(sname.toLowerCase(Locale.ENGLISH));
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		Cursor c = qdb.rawQuery("SELECT id FROM USERS WHERE email = '" + sname + "'", null);
+		if (c != null ) {
+			if (c.moveToFirst()) {
+				user_id= c.getInt(0);
+			}
+		}
+		c.close();
+		qdb.close(); 
+		return user_id;
+	}
+	
 	
 	public Integer GetFoodId(String name) {
 		int food_id = -1;
@@ -173,6 +188,50 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		
 		return count;
+	}
+	
+	public Integer getEmailCount(){
+	SQLiteDatabase qdb = this.getReadableDatabase();
+	int iCount = 0;
+	Cursor c = qdb.rawQuery("SELECT count(*) FROM USERS WHERE email IS NOT '';", null);
+	if (c != null ) {
+		if  (c.moveToFirst()) {
+			iCount= c.getInt(0);
+		}
+	}
+	c.close();
+	qdb.close(); 
+	return iCount;
+}
+	
+	public String[] getEmailList(){
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		int iCount = 0;
+		String[] nArray;
+		nArray = new String[0];
+		Cursor c = qdb.rawQuery("SELECT count(*) FROM USERS WHERE email IS NOT '';", null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			iCount= c.getInt(0);
+    			nArray = new String[iCount];    			    			
+    		}
+		}
+		c.close();
+		iCount = 0;
+		c = qdb.rawQuery("SELECT email FROM USERS WHERE email IS NOT '';", null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				String text = c.getString(0);
+    				nArray[iCount] = text;
+    				iCount = iCount + 1;
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+		c.close();
+		qdb.close(); 
+		return nArray;
 	}
 	
 	//////////////GET AND DO SOMETHING FUNCTIONS//////////////
@@ -360,6 +419,20 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 	}
 	
+	public void addSoloFood(String foodname){
+		if (GetFoodId(foodname)<0){
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodname +"');");
+		qdb.close();
+		}
+	}
+	
+	//unfinished
+	public void updateUser(int user_id, int food_id, int avg_rating){
+	//similar to addFood but only test for existancce in users_foods	
+		
+	}
+	
 	///////////////DEMO FUNCTIONS///////////
 	
 	public boolean insertText(){
@@ -404,7 +477,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		return toReturn;
 	}
 	
-public String CapEachWord(String Text){
+	public String CapEachWord(String Text){
 		
 		StringBuilder b = new StringBuilder(Text);
 		int i = 0;
