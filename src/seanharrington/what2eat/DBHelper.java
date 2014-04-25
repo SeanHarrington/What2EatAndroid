@@ -1,5 +1,5 @@
 package seanharrington.what2eat;
-
+  
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -203,44 +203,52 @@ public class DBHelper extends SQLiteOpenHelper{
 	return iCount;
 }
 	
-	public String getPreparedUpload(){
-		String PrepString = "";
+	public Integer getUpdatedCount(){
 		SQLiteDatabase qdb = this.getReadableDatabase();
-		Cursor c = qdb.rawQuery("SELECT USERS.email, FOODS.food_name, USERS_FOODS.rating, USERS_FOODS.old_rating from USERS, FOODS, USERS_FOODS WHERE USERS.email != '' AND USERS_FOODS.food_id = FOODS.food_id AND USERS_FOODS.user_id = USERS.user_id AND USERS_FOODS.updated > 0", null);
+		int iCount = 0;
+		Cursor c = qdb.rawQuery("SELECT count(*) FROM USERS_FOODS WHERE updated > 0;", null);
 		if (c != null ) {
-    		if  (c.moveToFirst()) {
-    			do {
-    				String email = c.getString(c.getColumnIndex("email")); 
-    				String food_name = c.getString(c.getColumnIndex("food_name"));
-    				Integer rating = c.getInt(c.getColumnIndex("rating"));
-    				Integer old_rating = c.getInt(c.getColumnIndex("old_rating"));
-    				Integer movement = rating - old_rating;
-    				Integer voted = 0;
-    				if (old_rating > 0){
-    					voted = 0;
-    				}
-    				else{
-    					voted = 1;
-    				}
-    						
-    				PrepString = PrepString + email + "," + food_name + "," + movement + "," + voted + ","; 
-    				
-    			}
-    			while (c.moveToNext());
-    		}
+			if  (c.moveToFirst()) {
+				iCount= c.getInt(0);
+			}
 		}
-				
 		c.close();
-		qdb.close();
-		
-		
-		
-		
-		
-		
-		//select statement for anything that has been updated.
-		
-		return PrepString;
+		qdb.close(); 
+		return iCount;
+	}
+	
+ 	public String[] getPreparedUpload(){
+		String[] nArray = new String[getUpdatedCount()*4];
+		Integer nCount = 0;
+		SQLiteDatabase qdb = this.getReadableDatabase();
+		Cursor c = qdb.rawQuery("SELECT USERS.id, USERS.email, FOODS.food_name, USERS_FOODS.rating, USERS_FOODS.old_rating from USERS, FOODS, USERS_FOODS WHERE USERS.email != '' AND USERS_FOODS.food_id = FOODS.food_id AND USERS_FOODS.user_id = USERS.user_id AND USERS_FOODS.updated > 0;", null);
+		if (c != null ) {
+			if  (c.moveToFirst()) {
+				do {
+				String email = c.getString(c.getColumnIndex("email"));
+				String food_name = c.getString(c.getColumnIndex("food_name"));
+				int i_rating = c.getInt(c.getColumnIndex("rating"));
+				int i_old_rating = c.getInt(c.getColumnIndex("old_rating"));
+				int votes = 0;
+				int movement = i_rating - i_old_rating;
+				if (i_old_rating == 0){
+					votes = 1;
+				}
+				//PrepString = email + "," + food_name + "," + movement + "," + votes;
+				nArray[nCount] = email;
+				nArray[nCount+1] = food_name;
+				nArray[nCount+2] = movement + "";
+				nArray[nCount+3] = votes + "";
+				
+				nCount = nCount + 4;
+				}
+    			while (c.moveToNext());
+			}
+		}
+		c.close();
+		qdb.close(); 
+		updateOff();
+		return nArray;
 	}
 	
 	public String[] getEmailList(){
@@ -375,6 +383,29 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	
 	////////////////SEND FUNCTIONS///////////
+	
+	public void updateOff(){
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		qdb.execSQL("UPDATE USERS_FOODS SET updated = 0;");
+		
+		Cursor c = qdb.rawQuery("SELECT user_food_id,rating FROM USERS_FOODS;", null);
+		if (c != null ) {
+    		if  (c.moveToFirst()) {
+    			do {
+    				int user_food_id = c.getInt(c.getColumnIndex("user_food_id"));
+    				int i_rating = c.getInt(c.getColumnIndex("rating"));
+    				qdb.execSQL("UPDATE USERS_FOODS SET old_rating = " + i_rating + " WHERE user_food_id = " + user_food_id +";");
+    				
+    			}
+    			while (c.moveToNext());
+    		}
+		}
+		c.close();
+		qdb.close(); 
+		
+	}
+	
+	
 	
 	public void addUser(String userName, String email) {
 		email = email.toLowerCase(Locale.ENGLISH);
