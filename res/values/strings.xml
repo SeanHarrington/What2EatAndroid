@@ -28,7 +28,7 @@
     <string name="about_version">What2Eat 0.1&#169;</string>
     <string name="about_description">"A simple tool to track eating habits"</string>
     <string name="about_authors">"Sean Harrington\nJared Vibert\nSam Reinthaler"</string>
-    <string name="about_github">"https://github.com/SeanHarrington/What2EatAndroid"</string>
+    <string name="about_github">"https://play.google.com/store/apps/details?id=seanharrington.what2eat"</string>
     <string name="report_friends">Friends</string>
     <string name="report_foods">Foods</string>
     <string name="title_activity_output">OutputActivity</string>

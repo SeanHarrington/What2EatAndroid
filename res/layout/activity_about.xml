@@ -52,14 +52,14 @@
 
     <TextView
         android:id="@+id/id_about_github"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffcccccc"
         android:layout_below="@+id/id_about_author"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:autoLink="web"
+        android:background="#ffcccccc"
+        android:gravity="center"
         android:text="@string/about_github"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:autoLink="web" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
  
 </RelativeLayout>
