@@ -309,7 +309,7 @@ public class UserActivity extends Activity implements OnClickListener {
 					e.printStackTrace();
 				}
 				try {
-					HttpResponse response = client.execute(post);
+					client.execute(post);
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -335,7 +335,7 @@ public class UserActivity extends Activity implements OnClickListener {
 		InputStream inputStream = null;
 	    String result = ""; 
 	    String url_select = url_return;
-	String FOODN;
+	//String FOODN;
 	String[] nResponseArray = new String[dbh.getEmailCount()];
 		protected void onPreExecute() {
 			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
@@ -405,7 +405,7 @@ public class UserActivity extends Activity implements OnClickListener {
 				if (i == 12){
 				//finalResult.setText(food_name);//debug
 				}
-				FOODN = food_name + " " + avg_rating;
+				//FOODN = food_name + " " + avg_rating;
 				
 				UserActivity.this.runOnUiThread(new Runnable() {
 

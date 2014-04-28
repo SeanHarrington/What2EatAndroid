@@ -1,33 +1,24 @@
 package seanharrington.what2eat;
  
 import android.app.Activity;
-import android.app.AlertDialog;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import android.util.Log;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.preference.PreferenceManager;
-
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem; 
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.TextView;
+//import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,32 +31,24 @@ import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends Activity implements OnClickListener{
 		
 	DBHelper dbh;
 	private static String url_return = "http://54.187.104.37/return.php?email=";
 	private static String url_send = "http://54.187.104.37/send.php";
-	private TextView finalResult;
+	//private TextView finalResult;
 	
 	ArrayAdapter<String> adapter;
 	String [] items = {"No Suggestions"};
@@ -78,7 +61,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		dbh = new DBHelper(this); 
 		
-		finalResult = (TextView) findViewById(R.id.maintitle);
+		//finalResult = (TextView) findViewById(R.id.maintitle);
 		Button buttontest = (Button) findViewById(R.id.main_user_data);
 		buttontest.setOnClickListener(this);
 		Button buttontest1 = (Button) findViewById(R.id.main_report);
@@ -184,7 +167,7 @@ public class MainActivity extends Activity implements OnClickListener{
 					e.printStackTrace();
 				}
 				try {
-					HttpResponse response = client.execute(post);
+					client.execute(post);
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -210,7 +193,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		InputStream inputStream = null;
 	    String result = ""; 
 	    String url_select = url_return;
-	String FOODN;
+	//String FOODN;
 	String[] nResponseArray = new String[dbh.getEmailCount()];
 		protected void onPreExecute() {
 			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
@@ -280,7 +263,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				if (i == 12){
 				//finalResult.setText(food_name);//debug
 				}
-				FOODN = food_name + " " + avg_rating;
+				//FOODN = food_name + " " + avg_rating;
 				
 				MainActivity.this.runOnUiThread(new Runnable() {
 

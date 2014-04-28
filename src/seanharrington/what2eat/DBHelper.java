@@ -3,9 +3,8 @@ package seanharrington.what2eat;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
+
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper{
@@ -286,7 +285,7 @@ public class DBHelper extends SQLiteOpenHelper{
 	public Integer[] populateUserReport(Integer[] nArray, int userId){
 		SQLiteDatabase qdb = this.getReadableDatabase();
 		int iCount = 0;
-		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.food_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, FOODS.food_name FROM USERS_FOODS, FOODS WHERE USERS_FOODS.food_id = FOODS.food_id and user_id = " + userId + " ORDER BY USERS_FOODS.rating DESC, FOODS.food_name", null);
+		Cursor c = qdb.rawQuery("SELECT USERS_FOODS.food_id, USERS_FOODS.rating, USERS_FOODS.avg_rating, FOODS.food_name FROM USERS_FOODS, FOODS WHERE USERS_FOODS.food_id = FOODS.food_id and user_id = " + userId + " ORDER BY USERS_FOODS.rating DESC", null);
 		if (c != null ) {
     		if  (c.moveToFirst()) {
     			do {

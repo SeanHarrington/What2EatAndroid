@@ -11,104 +11,109 @@
     
     tools:context="seanharrington.what2eat.UserActivity" >
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:selectAllOnFocus="true"
-        android:text="@string/activity_user_name"
-        android:ellipsize="end"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:ems="10"
-        android:text="@string/activity_user_email"
-        android:selectAllOnFocus="true"
-        android:ellipsize="end"
-        android:inputType="textEmailAddress" />
-
-    <Button
-        android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="8dp"
-        android:layout_centerHorizontal="true"
-        android:background="#ffcccccc"
-        android:text="@string/activity_user_create_update" />
-
     <Spinner
         android:id="@+id/spinner_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="8dp"
-        android:layout_centerHorizontal="true"
-        android:background="#88cccccc"
-        />
+        style="@style/SpinnerAsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="14dp"
+        android:background="#88cccccc" />
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_below="@+id/spinner_user_name"
-        android:layout_marginTop="20dp"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:selectAllOnFocus="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
         android:ellipsize="end"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
         android:text="@string/activity_user_food" />
-
-    <Spinner
-        android:id="@+id/spinner_user_food"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText3"
-        android:layout_centerHorizontal="true" 
-        android:background="#88cccccc"/>
-
-    <Button
-        android:id="@+id/button4"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button3"
-        android:layout_toRightOf="@+id/button1"
-        android:background="#88ff0000"
-        android:text="@string/activity_user_hate_it" />
 
     <Button
         android:id="@+id/button3"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="#88ffff00"
         android:text="@string/activity_user_its_ok" />
+
+    <Button
+        android:id="@+id/button4"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_marginLeft="34dp"
+        android:layout_toRightOf="@+id/button3"
+        android:background="#88ff0000"
+        android:text="@string/activity_user_hate_it" />
 
     <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner_user_food"
-        android:layout_marginTop="20dp"
-        android:layout_toLeftOf="@+id/button1"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_marginRight="27dp"
+        android:layout_toLeftOf="@+id/button3"
         android:background="#8800ff00"
         android:text="@string/activity_user_love_it" />
+
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="96dp"
+        android:background="#ffcccccc"
+        android:text="@string/activity_user_create_update" />
+
+    <Spinner
+        android:id="@+id/spinner_user_food"
+        style="@style/SpinnerAsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_above="@+id/editText3"
+        android:layout_centerHorizontal="true"
+        android:background="#88cccccc"
+        android:ellipsize="marquee"
+        android:dropDownWidth="match_parent" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:ellipsize="end"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:text="@string/activity_user_name" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:ellipsize="end"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        android:text="@string/activity_user_email" />
 
 </RelativeLayout>

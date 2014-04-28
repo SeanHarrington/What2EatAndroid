@@ -31,8 +31,9 @@
 
     <Spinner
         android:id="@+id/report_spinner_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        style="@style/SpinnerAsEditText"
+        android:layout_height="60dp"
         android:layout_below="@+id/textView1"
         android:layout_alignLeft="@+id/report_spinner_foods"
         android:layout_marginTop="6dp"
@@ -50,9 +51,10 @@
         
     <Spinner
         android:id="@+id/report_spinner_foods"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_below="@+id/textView2"
+        style="@style/SpinnerAsEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:background="#88cccccc" />

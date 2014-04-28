@@ -112,7 +112,7 @@ public class AboutActivity extends Activity {
 					e.printStackTrace();
 				}
 				try {
-					HttpResponse response = client.execute(post);
+					client.execute(post);
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -138,7 +138,7 @@ public class AboutActivity extends Activity {
 		InputStream inputStream = null;
 	    String result = ""; 
 	    String url_select = url_return;
-	String FOODN;
+	//String FOODN;
 	String[] nResponseArray = new String[dbh.getEmailCount()];
 		protected void onPreExecute() {
 			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
@@ -208,7 +208,7 @@ public class AboutActivity extends Activity {
 				if (i == 12){
 				//finalResult.setText(food_name);//debug
 				}
-				FOODN = food_name + " " + avg_rating;
+				//FOODN = food_name + " " + avg_rating;
 				
 				AboutActivity.this.runOnUiThread(new Runnable() {
 

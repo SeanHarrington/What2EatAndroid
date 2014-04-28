@@ -35,14 +35,14 @@ public final class R {
         public static final int about_description=0x7f080003;
         public static final int about_version=0x7f080002;
         public static final int action_settings=0x7f080018;
-        public static final int button1=0x7f080011;
-        public static final int button2=0x7f080017;
-        public static final int button3=0x7f080016;
-        public static final int button4=0x7f080015;
+        public static final int button1=0x7f080014;
+        public static final int button2=0x7f080013;
+        public static final int button3=0x7f080011;
+        public static final int button4=0x7f080012;
         public static final int container=0x7f080000;
-        public static final int editText1=0x7f08000f;
-        public static final int editText2=0x7f080010;
-        public static final int editText3=0x7f080013;
+        public static final int editText1=0x7f080016;
+        public static final int editText2=0x7f080017;
+        public static final int editText3=0x7f080010;
         public static final int id_about_author=0x7f080004;
         public static final int id_about_github=0x7f080005;
         public static final int imageView1=0x7f080006;
@@ -53,8 +53,8 @@ public final class R {
         public static final int output_report_text_view=0x7f08000a;
         public static final int report_spinner_foods=0x7f08000d;
         public static final int report_spinner_friends=0x7f08000c;
-        public static final int spinner_user_food=0x7f080014;
-        public static final int spinner_user_name=0x7f080012;
+        public static final int spinner_user_food=0x7f080015;
+        public static final int spinner_user_name=0x7f08000f;
         public static final int textView1=0x7f08000b;
         public static final int textView2=0x7f08000e;
         public static final int upload=0x7f080019;
@@ -141,5 +141,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+        public static final int SpinnerAsEditText=0x7f060002;
     }
 }
