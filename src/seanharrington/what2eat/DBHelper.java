@@ -221,7 +221,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		String[] nArray = new String[getUpdatedCount()*4];
 		Integer nCount = 0;
 		SQLiteDatabase qdb = this.getReadableDatabase();
-		Cursor c = qdb.rawQuery("SELECT USERS.id, USERS.email, FOODS.food_name, USERS_FOODS.rating, USERS_FOODS.old_rating from USERS, FOODS, USERS_FOODS WHERE USERS.email != '' AND USERS_FOODS.food_id = FOODS.food_id AND USERS_FOODS.user_id = USERS.user_id AND USERS_FOODS.updated > 0;", null);
+		Cursor c = qdb.rawQuery("SELECT USERS.id, USERS.email, FOODS.food_name, USERS_FOODS.rating, USERS_FOODS.old_rating from USERS, FOODS, USERS_FOODS WHERE USERS.email != '' AND USERS_FOODS.food_id = FOODS.food_id AND USERS_FOODS.user_id = USERS.id AND USERS_FOODS.updated > 0;", null);
 		if (c != null ) {
 			if  (c.moveToFirst()) {
 				do {
@@ -231,7 +231,7 @@ public class DBHelper extends SQLiteOpenHelper{
 				int i_old_rating = c.getInt(c.getColumnIndex("old_rating"));
 				int votes = 0;
 				int movement = i_rating - i_old_rating;
-				if (i_old_rating == 0){
+				if (i_old_rating < 1){
 					votes = 1;
 				}
 				//PrepString = email + "," + food_name + "," + movement + "," + votes;
@@ -405,20 +405,24 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 	}
 	
+	public void resetDB(){
+		SQLiteDatabase qdb = this.getWritableDatabase();
+		//leave these 6 here for wiping the table
+		qdb.execSQL("DROP TABLE USERS_FOODS;");
+		qdb.execSQL("DROP TABLE USERS;");
+		qdb.execSQL("DROP TABLE FOODS;");
 	
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
+		qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
+		qdb.close();
+		
+	}
 	
 	public void addUser(String userName, String email) {
 		email = email.toLowerCase(Locale.ENGLISH);
 		userName = GetSantizedString(userName.toLowerCase(Locale.ENGLISH));
 		SQLiteDatabase qdb = this.getWritableDatabase();
-		//leave these 6 here for wiping the table
-		//qdb.execSQL("DROP TABLE USERS_FOODS;");
-		//qdb.execSQL("DROP TABLE USERS;");
-		//qdb.execSQL("DROP TABLE FOODS;");
-	
-		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + FOODS + " (food_id INTEGER PRIMARY KEY, food_name VARCHAR);");
-		//qdb.execSQL("CREATE TABLE IF NOT EXISTS " + USERS + " (id INTEGER PRIMARY KEY, name VARCHAR NOT NULL, email VARCHAR);");
-		//qdb.execSQL("CREATE TABLE IF NOT EXISTS USERS_FOODS(user_food_id INTEGER PRIMARY KEY, user_id INTEGER, food_id INTEGER, rating INTEGER, old_rating INTEGER, updated INTEGER, avg_rating INTEGER, FOREIGN KEY(user_id) REFERENCES USERS(user_id), FOREIGN KEY (food_id) REFERENCES FOODS(food_id));");
 		
 	
 		Cursor c = qdb.rawQuery("SELECT * FROM USERS WHERE name = \""+ userName + "\"", null);
@@ -450,7 +454,7 @@ public class DBHelper extends SQLiteOpenHelper{
 		
 		
 		else if (food_id < 0){
-			//yes, then double insert			emailemail
+			//yes, then double insert	
 			SQLiteDatabase qdb = this.getWritableDatabase();
 			qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodName +"');");
 			qdb.close();
@@ -490,16 +494,28 @@ public class DBHelper extends SQLiteOpenHelper{
 	}
 	
 	public void addSoloFood(String foodname){
-		if (GetFoodId(foodname)<0){
-		SQLiteDatabase qdb = this.getWritableDatabase();
-		qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodname +"');");
+		
+			SQLiteDatabase qdb = this.getWritableDatabase();
+			Cursor c = qdb.rawQuery("SELECT food_id FROM FOODS WHERE food_name = '" + foodname + "'", null);
+			if (c != null ) {
+				if (c.moveToFirst()) {
+					
+				}
+				else{
+					qdb.execSQL("INSERT INTO FOODS(food_name) VALUES ('" + foodname +"');");
+									
+				}
+			}
+			
+			c.close();
+				
 		qdb.close();
-		}
+		
 	}
 	
 	//unfinished
 	public void updateUser(int user_id, int food_id, int avg_rating){
-	//similar to addFood but only test for existancce in users_foods	
+	//similar to addFood but only test for existence in users_foods	
 		SQLiteDatabase qdb = this.getWritableDatabase();
 		int old_rating = -1;
 		Cursor c = qdb.rawQuery("SELECT rating from USERS_FOODS where food_id = " + food_id + " and user_id = "+ user_id, null);
@@ -511,10 +527,10 @@ public class DBHelper extends SQLiteOpenHelper{
 		c.close();
 		
 		if (old_rating > -1){
-			qdb.execSQL("UPDATE USERS_FOODS SET avg_rating = " + avg_rating + ";");
+			qdb.execSQL("UPDATE USERS_FOODS SET avg_rating = " + avg_rating + " WHERE food_id = " + food_id + " and user_id = "+ user_id +";");
 		}
 		else{
-			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ avg_rating +");");
+			qdb.execSQL("INSERT INTO USERS_FOODS(user_id,food_id, rating, old_rating, avg_rating) VALUES ("+ user_id + ","+ food_id +","+ avg_rating +",0,"+ avg_rating +");");
 		}
 		qdb.close();
 		

@@ -84,6 +84,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		Button buttontest1 = (Button) findViewById(R.id.main_report);
 		buttontest1.setOnClickListener(this);
 		
+//			dbh.resetDB();	//use this to reset the device's DB
 		
 		if (doOnce < 1){
 			doOnce++;
@@ -145,6 +146,7 @@ public class MainActivity extends Activity implements OnClickListener{
         		break;
 		}		
 	}
+	
 	
 	private class sendData extends AsyncTask<Void, Void, Void> {
 		
@@ -208,14 +210,14 @@ public class MainActivity extends Activity implements OnClickListener{
 		InputStream inputStream = null;
 	    String result = ""; 
 	    String url_select = url_return;
-	
-
+	String FOODN;
+	String[] nResponseArray = new String[dbh.getEmailCount()];
 		protected void onPreExecute() {
 			Log.d("SuggestionAPP ", "Preparing to get Suggestions");		
 		}
 
 		protected Void doInBackground(Void... params) {
-			String[] nResponseArray = new String[dbh.getEmailCount()];
+			
 			String concat_string= "";
 			nResponseArray = dbh.getEmailList();
 			for (int i = 0; i < nResponseArray.length; i=i+1){
@@ -264,21 +266,31 @@ public class MainActivity extends Activity implements OnClickListener{
 
 		protected void pushToLocal(String unParsed, String email){
 			unParsed = unParsed.replace(";",",");
-			int commaCount = unParsed.length() - unParsed.replace(",", "").length();
-			String[] nResponseArray = new String[commaCount];
+			unParsed = unParsed.replace("\"","");
+			unParsed = unParsed.replace("~","");
+			unParsed = unParsed.substring(0,unParsed.length()-2);
 			String[] parts = unParsed.split(",");
 			
-			for (int i = 0; i < commaCount; i=i+1) {
-				nResponseArray[i] = parts[i];
-				//now we have an array where each thing is seperated
-			}
-			for (int i = 0; i < nResponseArray.length; i=i+3){
-				String food_name = nResponseArray[i];
-				Integer sum_rating = Integer.parseInt(nResponseArray[i+1]);
-				Integer sum_vote = Integer.parseInt(nResponseArray[i+2]);
+			for (int i = 0; i < parts.length; i=i+3){
+				String food_name = parts[i];
+				Integer sum_rating = Integer.parseInt(parts[i+1]);
+				Integer sum_vote = Integer.parseInt(parts[i+2]);
 				Integer avg_rating = sum_rating/sum_vote;
 				//UPDATE USERS_FOODS SET avg_rating = #{avgr} WHERE user_id = #{name_id} and food_id = #{food_id}"
-				finalResult.setText(food_name);
+				if (i == 12){
+				//finalResult.setText(food_name);//debug
+				}
+				FOODN = food_name + " " + avg_rating;
+				
+				MainActivity.this.runOnUiThread(new Runnable() {
+
+			        public void run() {
+			        	
+			            //Toast.makeText(MainActivity.this, FOODN, Toast.LENGTH_SHORT).show();
+			            
+			        }
+			    });
+				
 				dbh.addSoloFood(food_name);
 				dbh.updateUser(dbh.getUserIdbyEmail(email), dbh.GetFoodId(food_name), avg_rating);
 			}
@@ -288,9 +300,9 @@ public class MainActivity extends Activity implements OnClickListener{
 		protected void onPostExecute(Void donothing) {
 			//parse JSON data
 	        	//pushToLocal(result);
+			Toast.makeText(getApplicationContext(), "Update Finished", Toast.LENGTH_SHORT).show();
 	        	//here is were we will send the string to the DBHelper to be parsed and updated.
 			}		
 	}
-	
 	
 }
