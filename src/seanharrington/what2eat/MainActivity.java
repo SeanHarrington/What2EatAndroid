@@ -98,9 +98,15 @@ public class MainActivity extends Activity implements OnClickListener{
 		else if (id == R.id.upload) {
 			//Toast.makeText(getApplicationContext(), "UPDATE is clicked", Toast.LENGTH_SHORT).show();
 			
-			new getData().execute();	
+				
 			new sendData().execute();
-			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			new getData().execute();	
 			
 			return true;
 		}
@@ -208,7 +214,8 @@ public class MainActivity extends Activity implements OnClickListener{
 			try {
 				URI uri = new URI(concat_string);
 				HttpClient httpclient = new DefaultHttpClient();
-	            HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
+				Log.d("SuggestionAPP ", "Calling Return with "+concat_string);	
+				HttpResponse httpResponse = httpclient.execute(new HttpGet(uri));
 	            HttpEntity httpEntity = httpResponse.getEntity();
 	            inputStream = httpEntity.getContent(); 		        
 			 } catch (UnsupportedEncodingException e1) {
@@ -238,6 +245,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		            
 		            inputStream.close();
 		            result = sBuilder.toString();
+		            Log.d("SuggestionAPP ", "String is: "+result);	
 		            pushToLocal(result,nResponseArray[i]);
 		        } catch (Exception e) {
 		            Log.e("StringBuilding & BufferedReader", "Error converting result " + e.toString());

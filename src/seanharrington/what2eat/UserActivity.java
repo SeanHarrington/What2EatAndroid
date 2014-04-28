@@ -40,6 +40,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 
+
 public class UserActivity extends Activity implements OnClickListener {
 	Boolean initialDisplay = true;
 	Boolean initialDisplayFood = true;
@@ -182,8 +183,14 @@ public class UserActivity extends Activity implements OnClickListener {
 			return true;
 		}
 		else if (id == R.id.upload) {
-			new getData().execute();	
 			new sendData().execute();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			new getData().execute();	
 			return true;
 		}
 		

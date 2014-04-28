@@ -21,6 +21,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.os.AsyncTask;
@@ -161,8 +162,14 @@ public class ReportActivity extends Activity{
 		}
 		else if (id == R.id.upload) {
 
-			new getData().execute();	
 			new sendData().execute();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			new getData().execute();	
 			
 			return true;
 		}
