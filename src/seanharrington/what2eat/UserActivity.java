@@ -39,16 +39,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-
-
 public class UserActivity extends Activity implements OnClickListener {
 	Boolean initialDisplay = true;
 	Boolean initialDisplayFood = true;
 	DBHelper dbh;
 	private static String url_return = "http://54.187.104.37/return.php?email=";
 	private static String url_send = "http://54.187.104.37/send.php";
-	
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -266,7 +263,6 @@ public class UserActivity extends Activity implements OnClickListener {
 	    }
 	}
 	
-
 	public String CapEachWord(String Text){
 		
 		StringBuilder b = new StringBuilder(Text);
@@ -279,7 +275,6 @@ public class UserActivity extends Activity implements OnClickListener {
 		return b.toString();
 	}
 	
-
 	private class sendData extends AsyncTask<Void, Void, Void> {
 		
 	     

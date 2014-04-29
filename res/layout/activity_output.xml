@@ -11,7 +11,9 @@
     tools:context="seanharrington.what2eat.OutputActivity"
     tools:ignore="MergeRootFrame" >
     
-
+<ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <TextView
         android:id="@+id/output_report_text_view"
         android:typeface="monospace"
@@ -21,5 +23,6 @@
         android:layout_centerVertical="true"
         android:background="#88cccccc"
         android:text="@string/output_report_text_view" />
-
+</ScrollView>
+    
 </RelativeLayout>
